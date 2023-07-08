@@ -12,7 +12,7 @@ const activeIndex = ref<string>('home')
  */
 function handleSelect(routeName: string): void {
   router.push({
-    name: routeName
+    name: routeName,
   })
 }
 </script>

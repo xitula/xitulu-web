@@ -8,7 +8,7 @@ const baseTechStackList = new Map([
   ['vueRouter', { name: 'VueRouter', link: 'https://router.vuejs.org' }],
   ['pinia', { name: 'Pinia', link: 'https://pinia.vuejs.org' }],
   ['elementPlus', { name: 'ElementPlus', link: 'https://element-plus.org' }],
-  ['eslint', { name: 'Eslint', link: 'https://eslint.org' }]
+  ['eslint', { name: 'Eslint', link: 'https://eslint.org' }],
 ])
 
 // 各个view使用的技术栈配置
