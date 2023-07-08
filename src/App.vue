@@ -3,6 +3,7 @@ import { onMounted } from 'vue'
 import TechStack from './components/TechStack.vue'
 import { useTechStackStore } from './stores/tech-stack'
 import Header from './components/RootHeader.vue'
+import Footer from './components/RootFooter.vue'
 
 onMounted(() => {
   const { setTechStack } = useTechStackStore()
@@ -18,7 +19,9 @@ onMounted(() => {
     <el-main id="main">
       <RouterView />
     </el-main>
-    <el-footer>footer</el-footer>
+    <el-footer id="footer">
+      <Footer />
+    </el-footer>
   </el-container>
 
   <!-- 技术栈展示模块 -->
@@ -32,5 +35,9 @@ onMounted(() => {
 }
 #main {
   flex-grow: 1;
+}
+#footer {
+  display: flex;
+  align-items: center;
 }
 </style>

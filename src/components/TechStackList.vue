@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useTechStackStore } from '@/stores/tech-stack'
+import { useTechStackStore } from '../stores/tech-stack'
 
 const store = useTechStackStore()
 const { currentList } = storeToRefs(store)

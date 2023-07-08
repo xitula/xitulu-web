@@ -1,0 +1,1 @@
+type CmdList = Array<string>
