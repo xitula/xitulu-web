@@ -1,5 +1,5 @@
 <script setup lang="ts"></script>
 
 <template>
-  <main>工具</main>
+  <main>随感</main>
 </template>

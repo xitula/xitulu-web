@@ -9,5 +9,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <main>main</main>
+  <main>首页</main>
 </template>

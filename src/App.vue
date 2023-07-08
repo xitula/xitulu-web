@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted } from 'vue'
 import TechStack from './components/TechStack.vue'
 import { useTechStackStore } from './stores/tech-stack'
+import Header from './components/RootHeader.vue'
 
 onMounted(() => {
   const { setTechStack } = useTechStackStore()
@@ -10,12 +11,26 @@ onMounted(() => {
 </script>
 
 <template>
-  <el-container>
-    <el-header>header</el-header>
-    <el-main>main</el-main>
+  <el-container id="body-container">
+    <el-header>
+      <Header />
+    </el-header>
+    <el-main id="main">
+      <RouterView />
+    </el-main>
     <el-footer>footer</el-footer>
   </el-container>
 
-  <!-- <RouterView /> -->
+  <!-- 技术栈展示模块 -->
   <TechStack />
 </template>
+
+<style scoped>
+#body-container {
+  max-width: 960px;
+  min-height: 100vh;
+}
+#main {
+  flex-grow: 1;
+}
+</style>
