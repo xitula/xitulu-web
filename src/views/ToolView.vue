@@ -3,7 +3,5 @@
 </script>
 
 <template>
-  <main>
-    工具首页
-  </main>
+  <main>工具首页</main>
 </template>

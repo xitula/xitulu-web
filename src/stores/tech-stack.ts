@@ -3,17 +3,16 @@ import { defineStore } from 'pinia'
 
 // 基础技术栈数据
 const baseTechStackList = new Map([
-  ['vite', {name: 'Vite', link: 'https://vitejs.dev/'}],
-  ['vue', {name: 'Vue', link: 'https://vuejs.org'}],
-  ['elementPlus', {name: 'ElementPlus', link: 'https://element-plus.org'}],
-  ['eslint', {name: 'Eslint', link: 'https://eslint.org/'}],
-  ['vueRouter', {name: 'VueRouter', link: 'https://router.vuejs.org'}],
+  ['vite', { name: 'Vite', link: 'https://vitejs.dev' }],
+  ['vue', { name: 'Vue', link: 'https://vuejs.org' }],
+  ['vueRouter', { name: 'VueRouter', link: 'https://router.vuejs.org' }],
+  ['pinia', { name: 'Pinia', link: 'https://pinia.vuejs.org' }],
+  ['elementPlus', { name: 'ElementPlus', link: 'https://element-plus.org' }],
+  ['eslint', { name: 'Eslint', link: 'https://eslint.org' }]
 ])
 
 // 各个view使用的技术栈配置
-const techStackListConfig = new Map([
-  ['home', ['vite', 'vue', 'eslint']],
-])
+const techStackListConfig = new Map([['home', ['vite', 'vue', 'eslint']]])
 
 /**
  * 获取当前展示view使用到的技术栈
@@ -25,7 +24,7 @@ function fetchCurrent(currentView: string): TechStack[] {
   const list: TechStack[] = []
 
   if (currentConfig) {
-    currentConfig.forEach(elem => {
+    currentConfig.forEach((elem) => {
       const curr = baseTechStackList.get(elem)
       if (curr) list.push(curr)
     })

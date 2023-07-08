@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import TechStackList from './TechStackList.vue';
+import TechStackList from './TechStackList.vue'
 
 // 技术栈列表状态
 const listStatus = ref<boolean>(false)
