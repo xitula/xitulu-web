@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import CommandLineSimulator from '../logics/CommandLineSimulator'
-import CommandLineHint from '../components/CommandLineHint.vue'
-import { useFooterStore } from '../stores/footer'
+import CommandLineSimulator from '../../logics/CommandLineSimulator'
+import CommandLineHint from './CommandLineHint.vue'
+import { useFooterStore } from '../../stores/footer'
 
 const footerStore = useFooterStore()
 const cls = new CommandLineSimulator()

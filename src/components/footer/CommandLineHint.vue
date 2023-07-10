@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { toRefs } from 'vue'
-import { useFooterStore } from '../stores/footer'
+import { useFooterStore } from '../../stores/footer'
 
 const store = useFooterStore()
 const { hints } = toRefs(store)
@@ -22,7 +22,5 @@ const { hints } = toRefs(store)
   border-top: 1px solid var(--color-main-contant);
   font-size: 1.4rem;
   color: var(--color-main-contant);
-}
-.item {
 }
 </style>

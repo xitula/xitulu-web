@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import CommandLineSimulator from '../components/CommandLineSimulator.vue'
+import CommandLineSimulator from './CommandLineSimulator.vue'
 </script>
 
 <template>

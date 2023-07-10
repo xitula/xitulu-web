@@ -39,7 +39,11 @@ function fetchCurrent(currentView: string): TechStack[] {
  * 配置使用技术栈store
  */
 export const useTechStackStore = defineStore('techStack', () => {
+  // 当前view技术栈列表
   const currentList = ref<TechStack[]>([])
+
+  // 技术栈列表显示状态
+  const techStackListShow = ref(false)
 
   /**
    * 设置当前技术栈
@@ -54,5 +58,5 @@ export const useTechStackStore = defineStore('techStack', () => {
     }
   }
 
-  return { currentList, setTechStack }
+  return { currentList, setTechStack, techStackListShow }
 })

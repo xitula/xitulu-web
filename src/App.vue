@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import TechStack from './components/TechStack.vue'
-import { useTechStackStore } from './stores/tech-stack'
 import Header from './components/RootHeader.vue'
-import Footer from './components/RootFooter.vue'
+import Footer from './components/footer/RootFooter.vue'
+import RBCornerContainer from './components/corner/RBCornerContainer.vue'
+import { useTechStackStore } from './stores/tech-stack'
 
 onMounted(() => {
   const { setTechStack } = useTechStackStore()
@@ -24,8 +24,7 @@ onMounted(() => {
     </el-footer>
   </el-container>
 
-  <!-- 技术栈展示模块 -->
-  <TechStack />
+  <RBCornerContainer />
 </template>
 
 <style scoped>
