@@ -35,9 +35,10 @@ onMounted(() => {
 }
 #main {
   flex-grow: 1;
+  margin-top: -1px;
+  padding-top: 1px;
 }
 #footer {
   display: flex;
-  align-items: center;
 }
 </style>

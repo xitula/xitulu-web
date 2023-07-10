@@ -7,7 +7,7 @@ const { hints } = toRefs(store)
 </script>
 
 <template>
-  <div id="list">
+  <div id="list" v-if="hints.length > 0">
     <div class="item" v-for="item in hints" :key="item">{{ item }}</div>
   </div>
 </template>
@@ -16,7 +16,12 @@ const { hints } = toRefs(store)
 #list {
   position: absolute;
   left: 0;
-  bottom: 2.2rem;
+  width: 100%;
+  bottom: 6rem;
+  padding: 0 1.1rem;
+  border-top: 1px solid var(--color-main-contant);
+  font-size: 1.4rem;
+  color: var(--color-main-contant);
 }
 .item {
 }

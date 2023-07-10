@@ -1,10 +1,27 @@
 /* 自定义 Element Plus 的颜色 */
 :root {
-  --el-menu-active-color: var(--color-main-contant);
+  --el-menu-text-color: var(--color-main-contant);
+  --el-menu-active-color: var(--color-main-contant-highlight);
   --el-menu-border-color: var(--color-main-contant);
   --el-input-border-color: var(--color-main-contant);
 }
 
+.el-header,
+.el-main,
+.el-footer {
+  padding: 0;
+}
+
+.el-menu--horizontal > .el-menu-item.is-active {
+  border-bottom: 2px solid var(--color-main-contant);
+}
+
+.el-main {
+  border-left: 1px solid var(--color-main-contant);
+  border-right: 1px solid var(--color-main-contant);
+}
+
 .el-input {
   --el-input-border-color: var(--color-main-contant);
+  --el-input-border-radius: 0;
 }
