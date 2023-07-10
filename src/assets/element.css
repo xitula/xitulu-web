@@ -1,0 +1,10 @@
+/* 自定义 Element Plus 的颜色 */
+:root {
+  --el-menu-active-color: var(--color-main-contant);
+  --el-menu-border-color: var(--color-main-contant);
+  --el-input-border-color: var(--color-main-contant);
+}
+
+.el-input {
+  --el-input-border-color: var(--color-main-contant);
+}
