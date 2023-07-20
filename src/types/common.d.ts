@@ -8,3 +8,10 @@ type Result = {
   message: string
   data?: object
 }
+
+// 通用API返回结果
+type Res = {
+  code: number
+  message: string
+  data?: object
+}

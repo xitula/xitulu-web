@@ -1,5 +1,5 @@
 <template>
-  <a href="https://github.com/xitula/xitulu-web" target="_blank" id="link">
+  <a href="https://github.com/xitula" target="_blank" id="link">
     <i class="el-icon" style="font-size: 24px" data-v-6c8d2bba=""
       ><!--[--><svg
         preserveAspectRatio="xMidYMid meet"

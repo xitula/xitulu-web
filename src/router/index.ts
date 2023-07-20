@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import ToolView from '../views/ToolView.vue'
 import BlogView from '../views/BlogView.vue'
 import Causerie from '../views/CauserieView.vue'
+import TodoView from '../views/TodoView.vue'
 
 export const routes = [
   {
@@ -24,6 +25,11 @@ export const routes = [
     path: '/causerie',
     name: 'causerie',
     component: Causerie,
+  },
+  {
+    path: '/todo',
+    name: 'todo',
+    component: TodoView,
   },
   {
     path: '/about',

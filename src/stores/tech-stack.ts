@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { error } from '../utils/logger'
 
 // 基础技术栈数据
 const baseTechStackList = new Map([
@@ -54,7 +55,7 @@ export const useTechStackStore = defineStore('techStack', () => {
     if (list) {
       currentList.value = list
     } else {
-      console.error('设置当前技术栈失败', viewName)
+      error('设置当前技术栈失败', viewName)
     }
   }
 

@@ -50,10 +50,12 @@
 }
 /* } */
 
-/* 我的深色主题颜色 */
+/* 我的深色主题变量 */
 :root {
   --color-main-contant: green;
   --color-main-contant-highlight: lightgreen;
+
+  --main-padding: 1rem;
 }
 
 *,
@@ -98,4 +100,10 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

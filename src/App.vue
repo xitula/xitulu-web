@@ -30,12 +30,13 @@ onMounted(() => {
 <style scoped>
 #body-container {
   max-width: 960px;
-  min-height: 100vh;
+  height: 100vh;
 }
 #main {
-  flex-grow: 1;
   margin-top: -1px;
   padding-top: 1px;
+  display: flex;
+  flex-direction: column;
 }
 #footer {
   display: flex;
