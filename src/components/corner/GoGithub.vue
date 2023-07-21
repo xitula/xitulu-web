@@ -19,6 +19,6 @@
 <style scoped>
 #link {
   display: flex;
-  color: var(--color-main-contant);
+  color: var(--main-color);
 }
 </style>

@@ -22,7 +22,7 @@ function toggleListStatus(): void {
   flex-direction: column;
   align-items: flex-end;
   font-size: 2rem;
-  color: var(--color-main-contant);
+  color: var(--main-color);
 }
 
 #icon {

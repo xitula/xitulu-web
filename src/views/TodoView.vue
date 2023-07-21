@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { error } from '../utils/logger';
-import { onMounted, toRefs } from 'vue'
+import { error } from '../utils/logger'
+import { ref, onMounted, toRefs } from 'vue'
 import { useTodoStore } from '../stores/todo'
 
 const todoStore = useTodoStore()
-const { todos, todosLoading, toggleSpread } = toRefs(todoStore)
+const { todos, todosLoading } = toRefs(todoStore)
+const { toggleTodoDone, toggleSpread, toggleEditing, editTodo } = todoStore
+const inputContant = ref<string>('')
+const inputDescription = ref<string>('')
 
 onMounted(async () => {
   try {
@@ -14,60 +17,91 @@ onMounted(async () => {
   }
 })
 
-function handleDoneChange(id) {
-  todoStore.toggleTodoDone(id)
+function handleEditStart(id: number) {
+  const todo = todos.value.find((item) => item.id === id)
+  const { contant, description } = todo
+  inputContant.value = contant
+  inputDescription.value = description
+  toggleEditing(id, true)
 }
 
-function handleBtnEdit(id) {
-  console.log('🚀[id]', id)
+function handleEditSave(id: number) {
+  editTodo(id, inputContant.value, inputDescription.value).then(() => {
+    toggleEditing(id, false)
+  })
 }
-
 </script>
 
 <template>
   <div id="list" class="flex" v-loading="todosLoading">
     <div class="flex item" v-for="item in todos" :key="item.id">
-      <div class="flex contant-box">
-        <div class="flex btn" @click="handleDoneChange(item.id)">
-          <el-icon v-if="item.done">
+      <div class="flex todo-main-box">
+        <div class="flex btn" @click="toggleTodoDone(item.id)">
+          <el-icon v-if="item.done && !item.doneLoading">
             <Check />
           </el-icon>
+          <el-icon v-if="item.doneLoading">
+            <Loading />
+          </el-icon>
         </div>
-        <div class="contant" :class="{ decoration: item.done }" :alt="item.contant">{{ item.contant }}</div>
+        <div class="flex contant-box">
+          <div
+            v-if="!item.editing"
+            class="contant"
+            :class="{ decoration: item.done }"
+            :alt="item.contant"
+          >
+            {{ item.contant }}
+          </div>
+          <el-input v-else class="contant" placeholder="事项内容" v-model="inputContant" />
+        </div>
         <div class="flex btns">
           <div class="spread" :hidden="!item.description">
-          <div class="flex btn" v-if="!item.spread">
-            <el-icon @click="toggleSpread(item.id)">
-              <Plus />
-            </el-icon>
-          </div>
-          <div class="flex btn" v-else>
-            <el-icon @click="toggleSpread(item.id)">
-              <Minus />
-            </el-icon>
-          </div>
+            <div class="flex btn" v-if="!item.spread">
+              <el-icon @click="toggleSpread(item.id)">
+                <ArrowDown />
+              </el-icon>
+            </div>
+            <div class="flex btn" v-else>
+              <el-icon @click="toggleSpread(item.id)">
+                <ArrowUp />
+              </el-icon>
+            </div>
           </div>
           <div class="flex btn">
-            <el-icon @click="handleBtnEdit(item.id)">
+            <el-icon v-if="item.editSaveLoading">
+              <Loading />
+            </el-icon>
+            <el-icon v-else-if="!item.editing" @click="handleEditStart(item.id)">
               <EditPen />
+            </el-icon>
+            <el-icon v-else @click="handleEditSave(item.id)">
+              <Check />
             </el-icon>
           </div>
         </div>
-        <div class="create-date" hidden :alt="item.description">{{ item.createDate }}</div>
+        <!-- <div class="create-date" hidden :alt="item.createDate">{{ item.createDate }}</div> -->
       </div>
-      <div v-if="item.spread" class="flex description">{{ item.description }}</div>
+      <div v-if="item.spread" class="flex description-box">
+        <div v-if="!item.editing" class="flex description">{{ item.description }}</div>
+        <el-input v-else type="textarea" v-model="inputDescription" placeholder="事项描述" />
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+/* [hidden] {
+  display: none;
+} */
+
 #list {
   flex-grow: 1;
   width: 100%;
-  padding: .3rem var(--main-padding);
+  padding: 0.3rem var(--main-padding);
   flex-direction: column;
   font-size: 2rem;
-  color: var(--color-main-contant);
+  color: var(--main-color);
 }
 
 .item {
@@ -77,13 +111,18 @@ function handleBtnEdit(id) {
   align-items: normal;
 }
 
+.todo-main-box {
+  min-width: 0;
+}
+
 .contant-box {
   flex-grow: 1;
+  padding: 0 1rem;
+  min-width: 0;
 }
 
 .contant {
   flex-grow: 1;
-  margin-left: 1rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -101,20 +140,25 @@ function handleBtnEdit(id) {
 .btn {
   width: 2rem;
   height: 2rem;
-  border: 1px solid var(--color-main-contant);
+  border: 1px solid var(--main-color);
   border-radius: 5px;
   cursor: pointer;
 }
 
-.btns>.btn {
+.btns > .btn {
   margin-left: 1rem;
 }
 
-.description {
-  border: 1px solid var(--color-main-contant);
+.description-box {
+  border: 1px solid var(--main-color);
   border-top: none;
-  padding: .5rem;
+  padding: 0.5rem;
   padding-top: 0;
+  flex-direction: column;
+}
+
+.description {
+  width: 100%;
   justify-content: flex-start;
 }
 </style>

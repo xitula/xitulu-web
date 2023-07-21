@@ -19,8 +19,8 @@ const { hints } = toRefs(store)
   width: 100%;
   bottom: 6rem;
   padding: 0 1.1rem;
-  border-top: 1px solid var(--color-main-contant);
+  border-top: 1px solid var(--main-color);
   font-size: 1.4rem;
-  color: var(--color-main-contant);
+  color: var(--main-color);
 }
 </style>

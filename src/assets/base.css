@@ -52,8 +52,9 @@
 
 /* 我的深色主题变量 */
 :root {
-  --color-main-contant: green;
-  --color-main-contant-highlight: lightgreen;
+  --main-color: green;
+  --main-color-highlight: lightgreen;
+  --main-background-color: black;
 
   --main-padding: 1rem;
 }

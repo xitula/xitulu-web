@@ -6,7 +6,14 @@ import { error } from '../utils/logger'
 function formatTodos(todo: Todo[]): Todo[] {
   return todo.map((item) => {
     const { done, ...others } = Object(item)
-    return { done: Boolean(done), doneLoading: false, spread: false, ...others }
+    return {
+      done: Boolean(done),
+      doneLoading: false,
+      spread: false,
+      editing: false,
+      editSaveLoading: false,
+      ...others,
+    }
   })
 }
 
@@ -14,6 +21,26 @@ function revertTodo(todo: Todo): object {
   const { id, contant, description, done: numDone } = todo
   const done = Number(numDone)
   return { id, contant, description, done }
+}
+
+function resetEditing(todos: Todo[]) {
+  todos.forEach((item) => {
+    item.editing = false
+  })
+}
+
+function updateTodo(params: ReqTodo): Promise<void> {
+  return put(`/todo`, params)
+    .then((res) => {
+      const { code, message } = Object(res)
+      if (code !== 0) {
+        error('updateTodoError:', message)
+        return Promise.reject(Error(message))
+      }
+    })
+    .catch((err) => {
+      error('updateTodoError', err)
+    })
 }
 
 export const useTodoStore = defineStore('todo', () => {
@@ -27,47 +54,70 @@ export const useTodoStore = defineStore('todo', () => {
         const { code, message, data } = Object(res)
         if (code === 0) {
           todos.value = formatTodos(data)
-          todosLoading.value = false
         } else {
           error('fetchTodosError:', message)
-          todosLoading.value = false
-          return Promise.reject(Error('fetchTodos接口错误'))
+          return Promise.reject(message)
         }
       })
       .catch((err) => {
-        todosLoading.value = false
         error('fetchTodosError', err)
+      })
+      .finally(() => {
+        todosLoading.value = false
       })
   }
 
-  function toggleTodoDone(id: number) {
-    const todo = todos.value.find(item => item.id === id)
+  function editTodo(id: number, contant: string, description: string): Promise<void> {
+    const todo = todos.value.find((item) => item.id === id)
+    if (todo?.editSaveLoading) return Promise.resolve()
     if (todo) {
-      todo.done = !todo.done
-      const params = revertTodo(todo)
-      return put(`/todo`, params)
-        .then((res) => {
-          const { code, message } = Object(res)
-          if (code === 0) {
-            fetchTodos()
-            return 0
-          } else {
-            error('updateTodoError:', message)
-            return Promise.reject(Error('toggleTodoDone接口错误'))
-          }
+      const { done } = todo
+      const params: ReqTodo = { id, contant, description, done: Number(done) }
+
+      todo.editSaveLoading = true
+      return updateTodo(params)
+        .then(() => {
+          fetchTodos()
         })
-        .catch((err) => {
-          error('updateTodoError', err)
+        .finally(() => {
+          todo.editSaveLoading = false
+        })
+    }
+    return Promise.reject(Error('ID错误'))
+  }
+
+  function toggleTodoDone(id: number) {
+    const todo = todos.value.find((item) => item.id === id)
+    if (todo?.doneLoading) return
+    if (todo) {
+      todo.doneLoading = true
+      const p = revertTodo(todo)
+      const params = { ...p } as ReqTodo
+      params.done = !todo.done ? 1 : 0
+      updateTodo(params)
+        .then(() => {
+          fetchTodos()
+        })
+        .finally(() => {
+          todo.doneLoading = false
         })
     }
   }
 
   function toggleSpread(id: number) {
-    const todo = todos.value.find(item => item.id === id)
+    const todo = todos.value.find((item) => item.id === id)
     if (todo) {
       todo.spread = !todo.spread
     }
   }
 
-  return { todos, todosLoading, fetchTodos, toggleTodoDone, toggleSpread }
+  function toggleEditing(id: number, newStatus: boolean) {
+    resetEditing(todos.value)
+    const todo = todos.value.find((item) => item.id === id)
+    if (todo) {
+      todo.editing = newStatus
+    }
+  }
+
+  return { todos, todosLoading, fetchTodos, editTodo, toggleTodoDone, toggleSpread, toggleEditing }
 })

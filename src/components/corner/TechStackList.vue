@@ -16,7 +16,7 @@ const { currentList } = storeToRefs(store)
 <style scoped>
 #list-table {
   min-width: 100%;
-  border: 1px solid var(--color-main-contant);
+  border: 1px solid var(--main-color);
   background-color: var(--color-background);
 }
 :deep(.cell) {

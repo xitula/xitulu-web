@@ -1,9 +1,9 @@
 /**
  * 通用日志工具
  */
-import { Logger } from "tslog";
+import { Logger } from 'tslog'
 
-const logger = new Logger({name: 'logger'})
+const logger = new Logger({ name: 'logger' })
 
 /**
  * 信息日志

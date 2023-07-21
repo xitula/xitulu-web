@@ -37,6 +37,7 @@ onMounted(() => {
   padding-top: 1px;
   display: flex;
   flex-direction: column;
+  color: var(--main-color);
 }
 #footer {
   display: flex;
