@@ -44,16 +44,25 @@ function updateTodo(params: ReqTodo): Promise<void> {
 }
 
 export const useTodoStore = defineStore('todo', () => {
+  // list
   const todos = ref<Todo[]>([])
   const todosLoading = ref(false)
 
+  // pagination
+  const currentPage = ref<number>(1)
+  const pageSize = ref<number>(20)
+  const total = ref<number>(1)
+
   function fetchTodos() {
     todosLoading.value = true
-    return get('/todo')
+    const params = { params: { currentPage: currentPage.value, pageSize: pageSize.value } }
+    return get('/todo', params)
       .then((res) => {
         const { code, message, data } = Object(res)
+        const { list, total: reqTotal } = Object(data)
+        total.value = reqTotal
         if (code === 0) {
-          todos.value = formatTodos(data)
+          todos.value = formatTodos(list)
         } else {
           error('fetchTodosError:', message)
           return Promise.reject(message)
@@ -119,5 +128,32 @@ export const useTodoStore = defineStore('todo', () => {
     }
   }
 
-  return { todos, todosLoading, fetchTodos, editTodo, toggleTodoDone, toggleSpread, toggleEditing }
+  function handleCurrentPageChange(current: number) {
+    currentPage.value = current
+    fetchTodos()
+  }
+
+  function handlePagePrevClick() {
+    fetchTodos()
+  }
+
+  function handlePageNextClick() {
+    fetchTodos()
+  }
+
+  return {
+    todos,
+    todosLoading,
+    currentPage,
+    total,
+    pageSize,
+    fetchTodos,
+    editTodo,
+    toggleTodoDone,
+    toggleSpread,
+    toggleEditing,
+    handleCurrentPageChange,
+    handlePagePrevClick,
+    handlePageNextClick,
+  }
 })

@@ -34,7 +34,6 @@ onMounted(() => {
 }
 #main {
   margin-top: -1px;
-  padding-top: 1px;
   display: flex;
   flex-direction: column;
   color: var(--main-color);

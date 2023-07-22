@@ -1,33 +1,42 @@
 /**
- 自定义 Element Plus 的颜色 
+ 自定义 Element Plus 样式
  */
+
+/* 自定义颜色变量 */
 :root {
   --el-color-primary: var(--main-color);
   --el-menu-text-color: var(--main-color);
-  --el-menu-active-color: var(--main-color-highlight);
+  --el-menu-active-color: var(--main-color-light);
   --el-menu-border-color: var(--main-color);
   --el-input-border-color: var(--main-color);
+  --el-pagination-hover-color: var(--main-color);
+  --el-pagination-button-color: var(--main-color);
 }
 
+/* 自定义全局样式 */
 .el-header,
 .el-main,
 .el-footer {
   padding: 0;
 }
 
-.el-loading-spinner .path {
-  stroke: var(--main-color);
-}
-
-.el-menu--horizontal > .el-menu-item.is-active {
-  border-bottom: 2px solid var(--main-color);
-}
-
+/* 自定义Container样式 */
 .el-main {
   border-left: 1px solid var(--main-color);
   border-right: 1px solid var(--main-color);
 }
 
+/* 自定义Loading样式 */
+.el-loading-spinner .path {
+  stroke: var(--main-color);
+}
+
+/* 自定义Menu样式 */
+.el-menu--horizontal > .el-menu-item.is-active {
+  border-bottom: 2px solid var(--main-color);
+}
+
+/* 自定义Input样式 */
 .el-input {
   --el-input-border-color: var(--main-color);
   --el-input-border-radius: 0;
@@ -40,4 +49,26 @@
 .el-textarea__inner {
   color: var(--main-color);
   box-shadow: 0 0 0 1px var(--main-color, var(--main-color)) inset;
+}
+
+/* 自定义Pagination样式 */
+.el-pagination {
+  color: var(--main-color);
+}
+
+.el-pager li {
+  color: var(--main-color);
+}
+
+.el-pagination .btn-prev,
+.el-pagination > .is-last {
+  color: var(--main-color);
+}
+
+.el-pagination button.is-disabled,
+.el-pagination button:disabled {
+  color: var(--main-color-dark);
+}
+.el-pager li.is-active {
+  color: var(--main-color-light);
 }

@@ -52,8 +52,9 @@
 
 /* 我的深色主题变量 */
 :root {
-  --main-color: green;
-  --main-color-highlight: lightgreen;
+  --main-color: #008000;
+  --main-color-light: #90ee90;
+  --main-color-dark: #006400;
   --main-background-color: black;
 
   --main-padding: 1rem;
@@ -74,6 +75,18 @@ html.dark {
 
 html {
   font-size: 10px;
+}
+
+html::-webkit-scrollbar {
+  width: 1rem;
+}
+
+html::-webkit-scrollbar-track {
+  background-color: var(--main-color);
+}
+
+html::-webkit-scrollbar-thumb {
+  background: var(--main-color);
 }
 
 body {
@@ -105,6 +118,7 @@ body {
 
 .flex {
   display: flex;
+  /* flex-direction: column; */
   justify-content: center;
   align-items: center;
 }
