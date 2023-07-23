@@ -3,6 +3,7 @@ import { error } from '../utils/logger'
 import { ref, onMounted, toRefs } from 'vue'
 import { useTodoStore } from '../stores/todo'
 import Pagination from '../components/Todo/PaginationComp.vue'
+import Toolbar from '../components/Todo/ToolbarComp.vue'
 
 const todoStore = useTodoStore()
 const { todos, todosLoading } = toRefs(todoStore)
@@ -40,7 +41,7 @@ function handleEditSave(id: number) {
 
 <template>
   <div id="todo-wrap" class="flex">
-    <div id="toolbar">toolbar</div>
+    <Toolbar />
     <div id="list" class="flex" v-loading="todosLoading">
       <div class="flex item" v-for="item in todos" :key="item.id">
         <div class="flex todo-main-box">

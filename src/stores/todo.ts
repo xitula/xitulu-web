@@ -44,6 +44,9 @@ function updateTodo(params: ReqTodo): Promise<void> {
 }
 
 export const useTodoStore = defineStore('todo', () => {
+  // toolbar
+  const orderBy = ref<string>('create-desc')
+
   // list
   const todos = ref<Todo[]>([])
   const todosLoading = ref(false)
@@ -53,9 +56,16 @@ export const useTodoStore = defineStore('todo', () => {
   const pageSize = ref<number>(20)
   const total = ref<number>(1)
 
+  function changeOrder(newOrder: string) {
+    orderBy.value = newOrder
+    fetchTodos()
+  }
+
   function fetchTodos() {
     todosLoading.value = true
-    const params = { params: { currentPage: currentPage.value, pageSize: pageSize.value } }
+    const params = {
+      params: { currentPage: currentPage.value, pageSize: pageSize.value, orderBy: orderBy.value },
+    }
     return get('/todo', params)
       .then((res) => {
         const { code, message, data } = Object(res)
@@ -134,11 +144,13 @@ export const useTodoStore = defineStore('todo', () => {
   }
 
   return {
+    orderBy,
     todos,
     todosLoading,
     currentPage,
     total,
     pageSize,
+    changeOrder,
     fetchTodos,
     editTodo,
     toggleTodoDone,
