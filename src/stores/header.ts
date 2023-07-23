@@ -18,7 +18,3 @@ export const useHeaderStore = defineStore('header', () => {
 
   return { currentMenu, changeMenu }
 })
-
-export async function useHeaderStoreAsync() {
-  return useHeaderStore()
-}
