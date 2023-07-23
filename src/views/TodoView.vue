@@ -34,9 +34,14 @@ function handleEditStart(id: number) {
 }
 
 function handleEditSave(id: number) {
-  editTodo(id, inputContant.value, inputDescription.value).then(() => {
+  const todo = todos.value.find((item) => item.id === id)
+  if (todo.contant !== inputContant.value || todo.description !== inputDescription.value) {
+    editTodo(id, inputContant.value, inputDescription.value).then(() => {
+      toggleEditing(id, false)
+    })
+  } else {
     toggleEditing(id, false)
-  })
+  }
 }
 </script>
 
