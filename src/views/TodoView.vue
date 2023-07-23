@@ -192,6 +192,7 @@ function handleEditSave(id: number) {
 }
 
 .description-box {
+  margin-top: -1px;
   border: 1px solid var(--main-color);
   border-top: none;
   padding: 0.5rem;

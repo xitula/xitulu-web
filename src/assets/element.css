@@ -44,11 +44,17 @@
 
 .el-input__inner {
   color: var(--main-color);
+  font-size: var(--common-font-size);
 }
 
 .el-textarea__inner {
-  color: var(--main-color);
+  border-radius: 0;
   box-shadow: 0 0 0 1px var(--main-color, var(--main-color)) inset;
+  color: var(--main-color);
+  font-size: var(--common-font-size);
+}
+.el-textarea__inner::-webkit-resizer {
+  display: none;
 }
 
 /* 自定义Pagination样式 */
