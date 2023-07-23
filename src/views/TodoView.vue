@@ -2,18 +2,11 @@
 import { error } from '../utils/logger'
 import { ref, onMounted, toRefs } from 'vue'
 import { useTodoStore } from '../stores/todo'
+import Pagination from '../components/Todo/PaginationComp.vue'
 
 const todoStore = useTodoStore()
-const { todos, todosLoading, currentPage, pageSize, total } = toRefs(todoStore)
-const {
-  toggleTodoDone,
-  toggleSpread,
-  toggleEditing,
-  editTodo,
-  handleCurrentPageChange,
-  handlePagePrevClick,
-  handlePageNextClick,
-} = todoStore
+const { todos, todosLoading } = toRefs(todoStore)
+const { toggleTodoDone, toggleSpread, toggleEditing, editTodo } = todoStore
 const inputContant = ref<string>('')
 const inputDescription = ref<string>('')
 
@@ -103,17 +96,7 @@ function handleEditSave(id: number) {
         </div>
       </div>
     </div>
-    <div id="pagination" class="flex">
-      <el-pagination
-        v-model:current-page="currentPage"
-        :total="total"
-        :page-size="pageSize"
-        layout="prev, pager, next"
-        @current-change="handleCurrentPageChange"
-        @prev-click="handlePagePrevClick"
-        @next-click="handlePageNextClick"
-      />
-    </div>
+    <Pagination />
   </div>
 </template>
 
@@ -203,11 +186,5 @@ function handleEditSave(id: number) {
 .description {
   width: 100%;
   justify-content: flex-start;
-}
-
-#pagination {
-  width: 100%;
-  height: 3rem;
-  border-top: 1px solid var(--main-color);
 }
 </style>

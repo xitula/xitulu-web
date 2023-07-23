@@ -133,14 +133,6 @@ export const useTodoStore = defineStore('todo', () => {
     fetchTodos()
   }
 
-  function handlePagePrevClick() {
-    fetchTodos()
-  }
-
-  function handlePageNextClick() {
-    fetchTodos()
-  }
-
   return {
     todos,
     todosLoading,
@@ -153,7 +145,5 @@ export const useTodoStore = defineStore('todo', () => {
     toggleSpread,
     toggleEditing,
     handleCurrentPageChange,
-    handlePagePrevClick,
-    handlePageNextClick,
   }
 })
