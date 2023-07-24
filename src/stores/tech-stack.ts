@@ -4,12 +4,16 @@ import { error } from '../utils/logger'
 
 // 基础技术栈数据
 const baseTechStackList = new Map([
+  // frontend
   ['vite', { name: 'Vite', link: 'https://vitejs.dev' }],
   ['vue', { name: 'Vue', link: 'https://vuejs.org' }],
   ['vueRouter', { name: 'VueRouter', link: 'https://router.vuejs.org' }],
   ['pinia', { name: 'Pinia', link: 'https://pinia.vuejs.org' }],
   ['elementPlus', { name: 'ElementPlus', link: 'https://element-plus.org' }],
   ['eslint', { name: 'Eslint', link: 'https://eslint.org' }],
+
+  // backend
+  ['air', { name: 'Air', link: 'https://github.com/cosmtrek/air' }],
 ])
 
 // 各个view使用的技术栈配置
