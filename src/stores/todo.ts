@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { get, put } from '../logics/request'
+import { get, post, put } from '../logics/request'
 import { error } from '../utils/logger'
 
 function formatTodos(todo: Todo[]): Todo[] {
@@ -29,6 +29,19 @@ function resetEditing(todos: Todo[]) {
   })
 }
 
+function addTodo(params: ReqTodo) {
+  return post('/todo', params)
+    .then((res) => {
+      const { code, message } = Object(res)
+      if (code !== 0) {
+        return Promise.reject(Error('addTodo接口错误:', message))
+      }
+    })
+    .catch((err) => {
+      error('addTodoError:', err)
+    })
+}
+
 function updateTodo(params: ReqTodo): Promise<void> {
   return put(`/todo`, params)
     .then((res) => {
@@ -45,6 +58,10 @@ function updateTodo(params: ReqTodo): Promise<void> {
 
 export const useTodoStore = defineStore('todo', () => {
   // toolbar
+  const inputAddContent = ref<string>('') // 新增内容输入框绑定
+  const inputAddDescription = ref<string>('') // 新增描述输入框绑定
+  const addSpread = ref<boolean>(false)
+  const addLoading = ref<boolean>(false) // 新增loading
   const orderBy = ref<string>('create-desc') // create-desc | update-desc
   const filterBy = ref<string>('all') // all | tobe | done
 
@@ -56,6 +73,29 @@ export const useTodoStore = defineStore('todo', () => {
   const currentPage = ref<number>(1)
   const pageSize = ref<number>(20)
   const total = ref<number>(1)
+
+  function handleAddTodo() {
+    if (inputAddContent.value === '' || addLoading.value === true) return
+    const param = {
+      contant: inputAddContent.value,
+      description: inputAddDescription.value,
+    }
+    addLoading.value = true
+    addTodo(param)
+      .then(() => {
+        inputAddContent.value = ''
+        inputAddDescription.value = ''
+        addSpread.value = false
+        fetchTodos()
+        currentPage.value = 1
+      })
+      .catch((err) => {
+        error(err)
+      })
+      .finally(() => {
+        addLoading.value = false
+      })
+  }
 
   function changeOrder(newOrder: string) {
     orderBy.value = newOrder
@@ -155,6 +195,10 @@ export const useTodoStore = defineStore('todo', () => {
   }
 
   return {
+    inputAddContent,
+    inputAddDescription,
+    addSpread,
+    addLoading,
     orderBy,
     filterBy,
     todos,
@@ -162,6 +206,7 @@ export const useTodoStore = defineStore('todo', () => {
     currentPage,
     total,
     pageSize,
+    handleAddTodo,
     changeOrder,
     changeFilter,
     fetchTodos,

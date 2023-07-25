@@ -7,11 +7,6 @@ import Footer from './components/footer/RootFooter.vue'
 import RBCornerContainer from './components/corner/RBCornerContainer.vue'
 import { useTechStackStore } from './stores/tech-stack'
 
-onMounted(() => {
-  const { setTechStack } = useTechStackStore()
-  setTechStack('home')
-})
-
 const router = useRouter()
 const headerStore = useHeaderStore()
 
@@ -20,6 +15,11 @@ watch(router.currentRoute, (newRouter) => {
   let routeName = path.substring(1)
   if (!routeName) routeName = 'home'
   headerStore.changeMenu(routeName)
+})
+
+onMounted(() => {
+  const { setTechStack } = useTechStackStore()
+  setTechStack('home')
 })
 </script>
 
