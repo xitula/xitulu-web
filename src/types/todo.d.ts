@@ -1,6 +1,6 @@
 type ReqTodo = {
   id?: number // ID
-  contant: string // 内容
+  content: string // 内容
   description: string // 描述
   done?: number // 是否已完成
   // createDate: string // 创建日期

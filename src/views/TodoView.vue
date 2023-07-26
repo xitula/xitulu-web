@@ -8,7 +8,7 @@ import Toolbar from '../components/Todo/ToolbarComp.vue'
 const todoStore = useTodoStore()
 const { todos, todosLoading } = toRefs(todoStore)
 const { toggleTodoDone, toggleSpread, toggleEditing, editTodo } = todoStore
-const inputContant = ref<string>('')
+const inputContent = ref<string>('')
 const inputDescription = ref<string>('')
 
 onMounted(async () => {
@@ -21,16 +21,16 @@ onMounted(async () => {
 
 function handleEditStart(id: number) {
   const todo = todos.value.find((item) => item.id === id)
-  const { contant, description } = todo
-  inputContant.value = contant
+  const { content, description } = todo
+  inputContent.value = content
   inputDescription.value = description
   toggleEditing(id, true)
 }
 
 function handleEditSave(id: number) {
   const todo = todos.value.find((item) => item.id === id)
-  if (todo.contant !== inputContant.value || todo.description !== inputDescription.value) {
-    editTodo(id, inputContant.value, inputDescription.value).then(() => {
+  if (todo.content !== inputContent.value || todo.description !== inputDescription.value) {
+    editTodo(id, inputContent.value, inputDescription.value).then(() => {
       toggleEditing(id, false)
     })
   } else {
@@ -56,13 +56,13 @@ function handleEditSave(id: number) {
           <div class="flex contant-box">
             <div
               v-if="!item.editing"
-              class="contant"
+              class="content"
               :class="{ decoration: item.done }"
-              :alt="item.contant"
+              :alt="item.content"
             >
-              {{ item.contant }}
+              {{ item.content }}
             </div>
-            <el-input v-else class="contant" placeholder="事项内容" v-model="inputContant" />
+            <el-input v-else class="content" placeholder="事项内容" v-model="inputContent" />
           </div>
           <div class="flex btns">
             <div class="spread" :hidden="!item.description">
@@ -147,7 +147,7 @@ function handleEditSave(id: number) {
   min-width: 0;
 }
 
-.contant {
+.content {
   flex-grow: 1;
   overflow: hidden;
   white-space: nowrap;

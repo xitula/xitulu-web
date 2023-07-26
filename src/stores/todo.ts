@@ -18,9 +18,9 @@ function formatTodos(todo: Todo[]): Todo[] {
 }
 
 function revertTodo(todo: Todo): object {
-  const { id, contant, description, done: numDone } = todo
+  const { id, content, description, done: numDone } = todo
   const done = Number(numDone)
-  return { id, contant, description, done }
+  return { id, content, description, done }
 }
 
 function resetEditing(todos: Todo[]) {
@@ -77,7 +77,7 @@ export const useTodoStore = defineStore('todo', () => {
   function handleAddTodo() {
     if (inputAddContent.value === '' || addLoading.value === true) return
     const param = {
-      contant: inputAddContent.value,
+      content: inputAddContent.value,
       description: inputAddDescription.value,
     }
     addLoading.value = true
@@ -86,8 +86,8 @@ export const useTodoStore = defineStore('todo', () => {
         inputAddContent.value = ''
         inputAddDescription.value = ''
         addSpread.value = false
-        fetchTodos()
         currentPage.value = 1
+        fetchTodos()
       })
       .catch((err) => {
         error(err)
@@ -137,12 +137,12 @@ export const useTodoStore = defineStore('todo', () => {
       })
   }
 
-  function editTodo(id: number, contant: string, description: string): Promise<void> {
+  function editTodo(id: number, content: string, description: string): Promise<void> {
     const todo = todos.value.find((item) => item.id === id)
     if (todo?.editSaveLoading) return Promise.resolve()
     if (todo) {
       const { done } = todo
-      const params: ReqTodo = { id, contant, description, done: Number(done) }
+      const params: ReqTodo = { id, content, description, done: Number(done) }
 
       todo.editSaveLoading = true
       return updateTodo(params)

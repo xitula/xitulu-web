@@ -106,6 +106,7 @@ function toggleSpread() {
   top: 3rem;
   width: 100%;
   background-color: var(--main-background-color);
+  z-index: 1;
 }
 
 .btn {
