@@ -2,10 +2,11 @@
 import { onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useHeaderStore } from './stores/header'
+import { useTechStackStore } from './stores/tech-stack'
 import Header from './components/RootHeader.vue'
+import UserLogin from './components/UserLogin.vue'
 import Footer from './components/footer/RootFooter.vue'
 import RBCornerContainer from './components/corner/RBCornerContainer.vue'
-import { useTechStackStore } from './stores/tech-stack'
 
 const router = useRouter()
 const headerStore = useHeaderStore()
@@ -37,6 +38,7 @@ onMounted(() => {
   </el-container>
 
   <RBCornerContainer />
+  <UserLogin />
 </template>
 
 <style scoped>

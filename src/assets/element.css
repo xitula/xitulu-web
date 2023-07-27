@@ -36,10 +36,21 @@
   border-bottom: 2px solid var(--main-color);
 }
 
+/* 自定义Button样式 */
+.el-button {
+  color: var(--main-color);
+  border-color: var(--main-color);
+  border-radius: 0;
+}
+
 /* 自定义Input样式 */
 .el-input {
   --el-input-border-color: var(--main-color);
   --el-input-border-radius: 0;
+}
+
+.el-input__icon {
+  color: var(--main-color);
 }
 
 .el-input__inner {

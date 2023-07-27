@@ -60,6 +60,12 @@
   --common-font-size: 2rem;
 
   --main-padding: 1rem;
+
+  --index-level-1: 1;
+  --index-level-3: 99;
+  --index-level-5: 199;
+  --index-level-7: 1000;
+  --index-level-9: 1999;
 }
 
 *,
