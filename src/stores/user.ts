@@ -39,6 +39,8 @@ export const useUserStore = defineStore('user', () => {
       })
       .finally(() => {
         loginLoading.value = false
+        inputLoginUsername.value = ''
+        inputLoginPassword.value = ''
       })
   }
 

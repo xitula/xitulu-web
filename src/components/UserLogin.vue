@@ -17,10 +17,10 @@ const { login } = userStore
     "
     v-if="showLogin"
   >
-    <div id="login-box" class="flex">
+    <div id="login-box" class="flex" @click.stop="">
       <el-input class="input" v-model="inputLoginUsername" />
       <el-input class="input" v-model="inputLoginPassword" type="password" :show-password="true" />
-      <el-button id="btn" @click="login" :loading="loginLoading">登陆</el-button>
+      <el-button id="btn" @click="login" :loading="loginLoading">登录</el-button>
     </div>
   </div>
 </template>

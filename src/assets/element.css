@@ -43,6 +43,10 @@
   border-radius: 0;
 }
 
+.el-button--primary {
+  background-color: var(--main-background-color-deep);
+}
+
 /* 自定义Input样式 */
 .el-input {
   --el-input-border-color: var(--main-color);
@@ -66,6 +70,26 @@
 }
 .el-textarea__inner::-webkit-resizer {
   display: none;
+}
+
+/* 自定义ElMessageBox样式 */
+.el-message-box {
+  border-color: var(--main-color);
+  border-radius: 0;
+  background-color: var(--main-background-color-deep);
+  color: var(--main-color);
+}
+
+.el-message-box__headerbtn .el-message-box__close {
+  color: var(--main-color);
+}
+
+.el-message-box__title {
+  color: var(--main-color);
+}
+
+.el-message-box__message {
+  color: var(--main-color);
 }
 
 /* 自定义Pagination样式 */
