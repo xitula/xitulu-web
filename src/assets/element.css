@@ -57,6 +57,10 @@
   color: var(--main-color);
 }
 
+.el-input .el-input__icon {
+  color: var(--main-color);
+}
+
 .el-input__inner {
   color: var(--main-color);
   font-size: var(--common-font-size);
@@ -112,4 +116,9 @@
 }
 .el-pager li.is-active {
   color: var(--main-color-light);
+}
+
+/* 自定义Form样式 */
+.el-form-item__label {
+  color: var(--main-color);
 }

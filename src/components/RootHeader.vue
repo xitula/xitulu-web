@@ -34,7 +34,10 @@ function handleSelect(routeName: string): void {
     <el-menu-item index="todo">待办</el-menu-item>
     <el-menu-item index="about">关于</el-menu-item>
     <div id="white-space"></div>
-    <el-menu-item index="login" v-if="mySelf.id === 0">登录</el-menu-item>
+    <div class="flex" v-if="mySelf.id === 0">
+      <el-menu-item index="signup">注册</el-menu-item>
+      <el-menu-item index="login">登录</el-menu-item>
+    </div>
     <el-sub-menu index="user" v-else>
       <template #title>{{ mySelf.nickname ? mySelf.nickname : mySelf.username }}</template>
       <el-menu-item index="logout">登出</el-menu-item>

@@ -6,3 +6,11 @@ type User = {
   status?: string
   token?: string
 }
+
+type SignupForm = {
+  nickname?: string
+  username: string
+  password: string
+  verifyPassword?: string
+  email?: string
+}

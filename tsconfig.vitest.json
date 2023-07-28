@@ -1,5 +1,6 @@
 {
   "extends": "./tsconfig.app.json",
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/**/*.json"],
   "exclude": [],
   "compilerOptions": {
     "moduleResolution": "node",

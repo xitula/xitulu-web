@@ -5,15 +5,20 @@ import { ElMessageBox, ElMessage } from 'element-plus'
 import { error } from '@/utils/logger'
 import cryptojs from 'crypto-js'
 
+function encryptPassword(password: string): string {
+  return cryptojs.SHA1(password).toString()
+}
+
 export const useUserStore = defineStore('user', () => {
   const mySelf = ref<User>({ id: 0, username: '' })
   const showLogin = ref<boolean>(false)
   const inputLoginUsername = ref<string>('')
   const inputLoginPassword = ref<string>('')
   const loginLoading = ref<boolean>(false)
+  const signupLoading = ref<boolean>(false)
 
   function login() {
-    const pwd = cryptojs.SHA1(inputLoginPassword.value).toString()
+    const pwd = encryptPassword(inputLoginPassword.value)
     const params = {
       username: inputLoginUsername.value,
       password: pwd,
@@ -68,5 +73,43 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  return { mySelf, showLogin, inputLoginUsername, inputLoginPassword, loginLoading, login, logout }
+  function signup(form: SignupForm) {
+    const params = { ...form }
+    delete params.verifyPassword
+    params.password = encryptPassword(params.password)
+    signupLoading.value = true
+    return post('/users', params)
+      .then((res) => {
+        const { code, message, data } = Object(res)
+        if (code !== 0) {
+          ElMessage({
+            message,
+            type: 'warning',
+          })
+        } else {
+          const { token } = Object(data)
+          mySelf.value = data
+          sessionStorage.setItem('token', token)
+        }
+      })
+      .catch((err) => {
+        error('/users error:', err)
+        ElMessage('注册接口错误')
+      })
+      .finally(() => {
+        signupLoading.value = false
+      })
+  }
+
+  return {
+    mySelf,
+    showLogin,
+    inputLoginUsername,
+    inputLoginPassword,
+    loginLoading,
+    signupLoading,
+    login,
+    logout,
+    signup,
+  }
 })
