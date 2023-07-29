@@ -36,6 +36,22 @@
   border-bottom: 2px solid var(--main-color);
 }
 
+.el-dropdown-menu, .el-popper.is-light .el-popper__arrow::before {
+  background-color: var(--main-background-color-deep);
+}
+
+.el-dropdown__popper.el-popper {
+  border-radius: 0;
+}
+
+.el-popper.is-light {
+  background-color: var(--main-background-color-deep);
+}
+
+.el-dropdown-menu__item {
+  color: var(--main-color);
+}
+
 /* 自定义Button样式 */
 .el-button {
   color: var(--main-color);
