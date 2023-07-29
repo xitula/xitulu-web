@@ -14,6 +14,7 @@ export const useUserStore = defineStore('user', () => {
   const showLogin = ref<boolean>(false)
   const inputLoginUsername = ref<string>('')
   const inputLoginPassword = ref<string>('')
+  const loginHint = ref<string>('')
   const loginLoading = ref<boolean>(false)
   const signupLoading = ref<boolean>(false)
 
@@ -32,6 +33,7 @@ export const useUserStore = defineStore('user', () => {
           const { token } = Object(data)
           mySelf.value = data
           sessionStorage.setItem('token', token)
+          sessionStorage.setItem('mySelf', JSON.stringify(data))
           showLogin.value = false
         }
       })
@@ -43,6 +45,7 @@ export const useUserStore = defineStore('user', () => {
         })
       })
       .finally(() => {
+        loginHint.value = ''
         loginLoading.value = false
         inputLoginUsername.value = ''
         inputLoginPassword.value = ''
@@ -64,6 +67,7 @@ export const useUserStore = defineStore('user', () => {
           } else {
             mySelf.value = { id: 0, username: '' }
             sessionStorage.removeItem('token')
+            sessionStorage.removeItem('mySelf')
           }
         })
         .catch((err) => {
@@ -106,6 +110,7 @@ export const useUserStore = defineStore('user', () => {
     showLogin,
     inputLoginUsername,
     inputLoginPassword,
+    loginHint,
     loginLoading,
     signupLoading,
     login,

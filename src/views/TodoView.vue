@@ -65,7 +65,7 @@ function handleEditSave(id: number) {
             <el-input v-else class="content" placeholder="事项内容" v-model="inputContent" />
           </div>
           <div class="flex btns">
-            <div class="spread" :hidden="!item.description">
+            <div class="spread" :hidden="!item.description && !item.editing">
               <div class="flex btn" v-if="!item.spread">
                 <el-icon @click="toggleSpread(item.id)">
                   <ArrowDown />

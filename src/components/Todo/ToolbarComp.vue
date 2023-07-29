@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { toRefs } from 'vue'
 import { useTodoStore } from '../../stores/todo'
+import { useUserStore } from '../../stores/user';
 
 const todoStore = useTodoStore()
+const userStore = useUserStore()
 
 const { inputAddContent, inputAddDescription, addSpread, addLoading, orderBy, filterBy } =
   toRefs(todoStore)
@@ -11,23 +13,33 @@ const { handleAddTodo, changeOrder, changeFilter } = todoStore
 function toggleSpread() {
   addSpread.value = !addSpread.value
 }
+
+function handleAddClick() {
+  const { mySelf: { id } } = userStore
+  if (id === 0) {
+    userStore.loginHint = '需要登录之后才能添加待办事项'
+    userStore.showLogin = true
+  } else {
+    handleAddTodo()
+  }
+}
 </script>
 
 <template>
   <div id="toolbar" class="flex">
     <div class="flex" id="input-wrap">
       <el-input id="content" size="small" v-model="inputAddContent" />
-      <div class="flex btn" v-if="addSpread">
+      <div class="flex btn spread" v-if="addSpread">
         <el-icon @click="toggleSpread()">
           <ArrowUp />
         </el-icon>
       </div>
-      <div class="flex btn" v-else>
+      <div class="flex btn spread" v-else>
         <el-icon @click="toggleSpread()">
           <ArrowDown />
         </el-icon>
       </div>
-      <div class="flex btn" @click="handleAddTodo" v-if="!addLoading">新增</div>
+      <div class="flex btn" @click="handleAddClick" v-if="!addLoading">新增</div>
       <div class="flex btn" @click="handleAddTodo" v-else>
         <el-icon>
           <Loading />
@@ -86,6 +98,7 @@ function toggleSpread() {
 <style scoped>
 #toolbar {
   justify-content: space-between;
+  padding-left: 0.15rem;
   padding-right: 1rem;
 }
 
@@ -123,6 +136,10 @@ function toggleSpread() {
   overflow: hidden;
   white-space: nowrap;
   font-size: 1.4rem;
+}
+
+.btn.spread {
+  padding: 0;
 }
 
 .active {

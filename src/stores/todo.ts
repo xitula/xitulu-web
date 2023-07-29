@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { get, post, put } from '../logics/request'
 import { error } from '../utils/logger'
+import { useUserStore } from './user'
 
 function formatTodos(todo: Todo[]): Todo[] {
   return todo.map((item) => {
@@ -57,6 +58,7 @@ function updateTodo(params: ReqTodo): Promise<void> {
 }
 
 export const useTodoStore = defineStore('todo', () => {
+  const userStore = useUserStore()
   // toolbar
   const inputAddContent = ref<string>('') // 新增内容输入框绑定
   const inputAddDescription = ref<string>('') // 新增描述输入框绑定
@@ -77,6 +79,7 @@ export const useTodoStore = defineStore('todo', () => {
   function handleAddTodo() {
     if (inputAddContent.value === '' || addLoading.value === true) return
     const param = {
+      uid: userStore.mySelf.id,
       content: inputAddContent.value,
       description: inputAddDescription.value,
     }
