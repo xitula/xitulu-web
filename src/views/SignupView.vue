@@ -85,7 +85,9 @@ function handleCancel() {
         <el-input v-model="form.email" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm(refForm)" :loading="userStore.signupLoading">注册</el-button>
+        <el-button type="primary" @click="submitForm(refForm)" :loading="userStore.signupLoading"
+          >注册</el-button
+        >
         <el-button @click="handleCancel">取消</el-button>
       </el-form-item>
     </el-form>

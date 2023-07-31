@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { toRefs } from 'vue'
 import { useTodoStore } from '../../stores/todo'
-import { useUserStore } from '../../stores/user';
+import { useUserStore } from '../../stores/user'
 
 const todoStore = useTodoStore()
 const userStore = useUserStore()
@@ -15,7 +15,9 @@ function toggleSpread() {
 }
 
 function handleAddClick() {
-  const { mySelf: { id } } = userStore
+  const {
+    mySelf: { id },
+  } = userStore
   if (id === 0) {
     userStore.loginHint = '需要登录之后才能添加待办事项'
     userStore.showLogin = true

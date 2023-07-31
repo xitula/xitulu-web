@@ -164,6 +164,7 @@ function handleEditSave(id: number) {
 }
 
 .btn {
+  flex-shrink: 0;
   width: 2rem;
   height: 2rem;
   border: 1px solid var(--main-color);

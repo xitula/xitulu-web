@@ -36,7 +36,8 @@
   border-bottom: 2px solid var(--main-color);
 }
 
-.el-dropdown-menu, .el-popper.is-light .el-popper__arrow::before {
+.el-dropdown-menu,
+.el-popper.is-light .el-popper__arrow::before {
   background-color: var(--main-background-color-deep);
 }
 

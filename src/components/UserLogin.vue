@@ -3,7 +3,8 @@ import { toRefs } from 'vue'
 import { useUserStore } from '../stores/user'
 
 const userStore = useUserStore()
-const { showLogin, inputLoginUsername, inputLoginPassword, loginHint, loginLoading } = toRefs(userStore)
+const { showLogin, inputLoginUsername, inputLoginPassword, loginHint, loginLoading } =
+  toRefs(userStore)
 const { login } = userStore
 </script>
 <template>
