@@ -39,14 +39,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <el-container id="body-container">
+  <el-container class="max-w-[960px] h-full">
     <el-header>
       <Header />
     </el-header>
-    <el-main id="main">
+    <el-main class="flex flex-col -mt-[1px] text-[--main-color]">
       <RouterView />
     </el-main>
-    <el-footer id="footer">
+    <el-footer class="flex">
       <Footer />
     </el-footer>
   </el-container>
@@ -54,19 +54,3 @@ onMounted(() => {
   <RBCornerContainer />
   <UserLogin />
 </template>
-
-<style scoped>
-#body-container {
-  max-width: 960px;
-  height: 100vh;
-}
-#main {
-  margin-top: -1px;
-  display: flex;
-  flex-direction: column;
-  color: var(--main-color);
-}
-#footer {
-  display: flex;
-}
-</style>

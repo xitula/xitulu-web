@@ -8,7 +8,10 @@ const { handleCurrentPageChange } = todoStore
 </script>
 
 <template>
-  <div id="pagination" class="flex">
+  <div
+    class="flex grow-0 shrink-0 justify-center items-center w-full h-12 overflow-hidden border-t border-[--main-color]"
+  >
+    <!-- 分页组件 -->
     <el-pagination
       v-model:current-page="currentPage"
       :total="total"
@@ -18,11 +21,3 @@ const { handleCurrentPageChange } = todoStore
     />
   </div>
 </template>
-
-<style scoped>
-#pagination {
-  width: 100%;
-  height: 3rem;
-  border-top: 1px solid var(--main-color);
-}
-</style>

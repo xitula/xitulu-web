@@ -5,16 +5,16 @@ defineProps<{
 </script>
 
 <template>
-  <div class="wrap">
+  <div class="wrap flex">
     <div class="flex item">
       <div class="left">
         <div class="avatar-box">
           <el-icon class="avatar"><UserFilled /></el-icon>
         </div>
       </div>
-      <div class="right">
+      <div class="">
         <div class="user-info">
-          <div class="nickname">{{ item.uid }}</div>
+          <div class="nickname font-bold">{{ item.uid }}</div>
         </div>
         <div class="content">
           {{ item.content }}

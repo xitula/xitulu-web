@@ -40,12 +40,25 @@ function handleEditSave(id: number) {
 </script>
 
 <template>
-  <div id="todo-wrap" class="flex">
+  <div class="flex flex-col justify-center items-center h-full">
     <Toolbar />
-    <div id="list" class="flex" v-loading="todosLoading">
-      <div class="flex item" v-for="item in todos" :key="item.id">
-        <div class="flex todo-main-box">
-          <div class="flex btn" @click="toggleTodoDone(item.id)">
+    <!-- 列表 -->
+    <div
+      class="flex flex-col justify-start items-center grow w-full px-[1rem] overflow-scroll text-[2rem] text-[--main-color]"
+      v-loading="todosLoading"
+    >
+      <!-- 条目 -->
+      <div
+        class="flex flex-col justify-center shrink-0 w-full min-h-[3rem]"
+        v-for="item in todos"
+        :key="item.id"
+      >
+        <div class="flex justify-center items-center min-w-0">
+          <!-- 完成状态 -->
+          <div
+            class="flex justify-center items-center shrink-0 btn"
+            @click="toggleTodoDone(item.id)"
+          >
             <el-icon v-if="item.done && !item.doneLoading">
               <Check />
             </el-icon>
@@ -53,31 +66,40 @@ function handleEditSave(id: number) {
               <Loading />
             </el-icon>
           </div>
-          <div class="flex contant-box">
+          <!-- 内容 -->
+          <div
+            class="flex justify-center items-center grow px-4 overflow-hidden whitespace-nowrap text-ellipsis cursor-default"
+          >
             <div
               v-if="!item.editing"
               class="content"
-              :class="{ decoration: item.done }"
+              :class="{ 'line-through': item.done }"
               :alt="item.content"
             >
               {{ item.content }}
             </div>
             <el-input v-else class="content" placeholder="事项内容" v-model="inputContent" />
           </div>
-          <div class="flex btns">
-            <div class="spread" :hidden="!item.description && !item.editing">
-              <div class="flex btn" v-if="!item.spread">
+          <!-- 按钮容器 -->
+          <div class="flex">
+            <!-- 展开按钮 -->
+            <div
+              class="flex justify-center items-center mr-4"
+              v-if="item.description || item.editing"
+            >
+              <div class="flex justify-center items-center shrink-0 btn" v-if="!item.spread">
                 <el-icon @click="toggleSpread(item.id)">
                   <ArrowDown />
                 </el-icon>
               </div>
-              <div class="flex btn" v-else>
+              <div class="flex justify-center items-center shrink-0 btn" v-else>
                 <el-icon @click="toggleSpread(item.id)">
                   <ArrowUp />
                 </el-icon>
               </div>
             </div>
-            <div class="flex btn">
+            <!-- 编辑按钮 -->
+            <div class="flex justify-center items-center shrink-0 btn">
               <el-icon v-if="item.editSaveLoading">
                 <Loading />
               </el-icon>
@@ -91,8 +113,14 @@ function handleEditSave(id: number) {
           </div>
           <!-- <div class="create-date" hidden :alt="item.createDate">{{ item.createDate }}</div> -->
         </div>
-        <div v-if="item.spread" class="flex description-box">
-          <div v-if="!item.editing" class="flex description">{{ item.description }}</div>
+        <!-- 描述 -->
+        <div
+          v-if="item.spread"
+          class="flex flex-col justify-center items-center mt-[-1px] p-2 border border-[--main-color] border-t-0"
+        >
+          <div v-if="!item.editing" class="flex justify-start items-center w-full">
+            {{ item.description }}
+          </div>
           <el-input v-else type="textarea" v-model="inputDescription" placeholder="事项描述" />
         </div>
       </div>
@@ -105,88 +133,28 @@ function handleEditSave(id: number) {
 /* [hidden] {
   display: none;
 } */
+@tailwind components;
 
-#todo-wrap {
-  height: 100%;
-  flex-direction: column;
+@layer components {
+  .content {
+    @apply grow
+      overflow-hidden
+      whitespace-nowrap
+      text-ellipsis
+      cursor-default;
+  }
+  .btn {
+    @apply w-8
+      h-8
+      border
+      border-[--main-color]
+      rounded-lg
+      cursor-pointer;
+  }
 }
 
-#toolbar {
-  width: 100%;
-  height: 3rem;
-  border-bottom: 1px solid var(--main-color);
-}
-
-#list {
-  flex-grow: 1;
-  width: 100%;
-  height: 10rem;
-  padding: 0.3rem var(--main-padding);
-  flex-direction: column;
-  justify-content: flex-start;
-  overflow: auto;
-  font-size: 2rem;
-  color: var(--main-color);
-}
-
-.item {
-  flex-shrink: 0;
-  width: 100%;
-  min-height: 3rem;
-  flex-direction: column;
-  align-items: normal;
-}
-
-.todo-main-box {
-  min-width: 0;
-}
-
-.contant-box {
-  flex-grow: 1;
-  padding: 0 1rem;
-  min-width: 0;
-}
-
-.content {
-  flex-grow: 1;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  cursor: default;
-}
-
-.decoration {
-  text-decoration: line-through;
-}
-
-.btns {
-  display: flex;
-}
-
-.btn {
-  flex-shrink: 0;
-  width: 2rem;
-  height: 2rem;
-  border: 1px solid var(--main-color);
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.btns > .btn {
-  margin-left: 1rem;
-}
-
-.description-box {
-  margin-top: -1px;
-  border: 1px solid var(--main-color);
-  border-top: none;
-  padding: 0.5rem;
-  padding-top: 0;
-  flex-direction: column;
-}
-
-.description {
-  width: 100%;
-  justify-content: flex-start;
+:deep(.el-input__inner),
+:deep(.el-textarea__inner) {
+  @apply text-[2rem];
 }
 </style>

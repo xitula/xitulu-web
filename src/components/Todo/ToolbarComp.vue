@@ -28,33 +28,39 @@ function handleAddClick() {
 </script>
 
 <template>
-  <div id="toolbar" class="flex">
-    <div class="flex" id="input-wrap">
-      <el-input id="content" size="small" v-model="inputAddContent" />
-      <div class="flex btn spread" v-if="addSpread">
+  <div
+    class="flex grow-0 shrink-0 justify-between items-center w-full p-[.2rem] pr-4 border-b border-[--main-color]"
+  >
+    <div class="relative flex justify-start items-center grow">
+      <!-- 内容输入框 -->
+      <el-input class="h-[2.8rem] text-[1.2rem]" v-model="inputAddContent" />
+      <!-- 展开按钮 -->
+      <div class="btn btn-no-px" v-if="addSpread">
         <el-icon @click="toggleSpread()">
           <ArrowUp />
         </el-icon>
       </div>
-      <div class="flex btn spread" v-else>
+      <div class="btn btn-no-px" v-else>
         <el-icon @click="toggleSpread()">
           <ArrowDown />
         </el-icon>
       </div>
-      <div class="flex btn" @click="handleAddClick" v-if="!addLoading">新增</div>
-      <div class="flex btn" @click="handleAddTodo" v-else>
+      <!-- 新增按钮 -->
+      <div class="btn" @click="handleAddClick" v-if="!addLoading">新增</div>
+      <div class="btn" @click="handleAddTodo" v-else>
         <el-icon>
           <Loading />
         </el-icon>
       </div>
-      <div id="description" v-if="addSpread">
+      <!-- 描述输入框 -->
+      <div class="absolute top-[3.3rem] w-full bg-[--main-background-color] z-10" v-if="addSpread">
         <el-input v-model="inputAddDescription" type="textarea" />
       </div>
     </div>
     <div id="right-btns">
-      <!-- 排序 -->
+      <!-- 排序下拉菜单 -->
       <el-dropdown placement="bottom-end" trigger="click" @command="changeOrder">
-        <div class="flex btn">排序</div>
+        <div class="btn">排序</div>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item command="create-desc">
@@ -70,9 +76,9 @@ function handleAddClick() {
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <!-- 过滤 -->
+      <!-- 过滤下拉菜单 -->
       <el-dropdown placement="bottom-end" trigger="click" @command="changeFilter">
-        <div class="flex btn">过滤</div>
+        <div class="btn">过滤</div>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item command="all">
@@ -98,50 +104,34 @@ function handleAddClick() {
 </template>
 
 <style scoped>
-#toolbar {
-  justify-content: space-between;
-  padding-left: 0.15rem;
-  padding-right: 1rem;
+@tailwind components;
+
+@layer components {
+  .btn {
+    @apply flex 
+    justify-center 
+    items-center 
+    cursor-pointer 
+    overflow-hidden 
+    ml-4 
+    min-w-[2rem] 
+    h-8 
+    px-[.4rem]
+    border 
+    border-[--main-color] 
+    rounded-md
+    text-[1.4rem]
+    text-[--main-color]
+    whitespace-nowrap;
+  }
+  .btn-no-px {
+    @apply px-0;
+  }
 }
 
-#input-wrap {
-  position: relative;
-  justify-content: flex-start;
-  flex-grow: 1;
-  padding-left: 0.1rem;
-  padding-right: 3rem;
-}
-
-#content {
-  height: 2.8rem;
-}
-
-#description {
-  position: absolute;
-  top: 3rem;
-  width: 100%;
-  background-color: var(--main-background-color);
-  z-index: 1;
-}
-
-.btn {
-  flex-grow: 1;
-  flex-direction: row;
-  margin-left: 1rem;
-  min-width: 2rem;
-  height: 2rem;
-  padding: 0 0.4rem;
-  border: 1px solid var(--main-color);
-  border-radius: 5px;
-  color: var(--main-color);
-  cursor: pointer;
-  overflow: hidden;
-  white-space: nowrap;
-  font-size: 1.4rem;
-}
-
-.btn.spread {
-  padding: 0;
+:deep(.el-input__inner),
+:deep(.el-textarea__inner) {
+  @apply text-[1.6rem];
 }
 
 .active {

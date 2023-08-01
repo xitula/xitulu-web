@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
   --vt-c-white: #ffffff;
@@ -55,7 +59,7 @@
   --main-color: #008000;
   --main-color-light: #90ee90;
   --main-color-dark: #006400;
-  --main-background-color: black;
+  --main-background-color: #000000;
   --main-background-color-deep: #141414;
 
   --common-font-size: 2rem;
@@ -77,16 +81,17 @@
   font-weight: normal;
 }
 
-html.dark {
-  /* 自定义深色背景颜色 */
-  --el-bg-color: #626aef;
-}
-
 html {
   font-size: 10px;
   user-select: none;
 }
 
+html.dark {
+  /* 自定义深色背景颜色 */
+  --el-bg-color: #626aef;
+}
+
+// TODO 未生效
 html::-webkit-scrollbar {
   width: 1rem;
 }
@@ -124,11 +129,4 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-.flex {
-  display: flex;
-  /* flex-direction: column; */
-  justify-content: center;
-  align-items: center;
 }
