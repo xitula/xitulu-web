@@ -5,11 +5,12 @@ import TechStackList from './TechStackList.vue'
 </script>
 
 <template>
-  <div id="right-bottom-wrap">
-    <div id="list">
+  <div class="fixed right-0 bottom-0 flex flex-col justify-center items-end">
+    <!-- 技术栈列表 -->
+    <div>
       <TechStackList />
     </div>
-    <div id="icons">
+    <div class="flex justify-end items-center">
       <!-- 跳转网站 Github 页面 -->
       <GoGithub />
       <!-- 技术栈展示模块 -->
@@ -17,20 +18,3 @@ import TechStackList from './TechStackList.vue'
     </div>
   </div>
 </template>
-
-<style scoped>
-#right-bottom-wrap {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-}
-#icons {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-</style>

@@ -11,22 +11,7 @@ function toggleListStatus(): void {
 </script>
 
 <template>
-  <div id="btn-tech-stack">
-    <el-icon id="icon" @click="toggleListStatus"><Tickets /></el-icon>
+  <div class="flex flex-col items-end text-[2rem] text-main-color">
+    <el-icon class="text-[2rem] cursor-pointer" @click="toggleListStatus"><Tickets /></el-icon>
   </div>
 </template>
-
-<style>
-#btn-tech-stack {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  font-size: 2rem;
-  color: var(--main-color);
-}
-
-#icon {
-  font-size: 2rem;
-  cursor: pointer;
-}
-</style>

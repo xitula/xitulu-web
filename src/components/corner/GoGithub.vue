@@ -1,5 +1,5 @@
 <template>
-  <a href="https://github.com/xitula" target="_blank" id="link">
+  <a class="flex text-main-color" href="https://github.com/xitula" target="_blank">
     <i class="el-icon" style="font-size: 24px" data-v-6c8d2bba=""
       ><!--[--><svg
         preserveAspectRatio="xMidYMid meet"
@@ -16,9 +16,3 @@
     >
   </a>
 </template>
-<style scoped>
-#link {
-  display: flex;
-  color: var(--main-color);
-}
-</style>

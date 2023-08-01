@@ -13,15 +13,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="wrap">
+  <div class="p-[--main-padding]">
     <div id="list">
       <Item v-for="item in causerieStore.causeries" :key="item.id" :item="item" />
     </div>
   </div>
 </template>
-
-<style scoped>
-#wrap {
-  padding: var(--main-padding);
-}
-</style>

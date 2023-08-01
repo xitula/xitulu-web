@@ -30,17 +30,8 @@ function blurHandler(): void {
 </script>
 
 <template>
-  <div id="wrap">
+  <div class="relative flex flex-col w-full">
     <CommandLineHint />
     <el-input v-model="command" @change="changeHandler" @blur="blurHandler" />
   </div>
 </template>
-
-<style scoped>
-#wrap {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  width: 100%;
-}
-</style>

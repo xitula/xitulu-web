@@ -9,7 +9,7 @@ const { handleCurrentPageChange } = todoStore
 
 <template>
   <div
-    class="flex grow-0 shrink-0 justify-center items-center w-full h-12 overflow-hidden border-t border-[--main-color]"
+    class="flex grow-0 shrink-0 justify-center items-center w-full h-12 overflow-hidden border-t border-main-color"
   >
     <!-- 分页组件 -->
     <el-pagination

@@ -67,7 +67,7 @@ function handleCancel() {
 }
 </script>
 <template>
-  <div class="flex" id="wrap">
+  <div class="flex justify-center w-full p-20">
     <el-form :model="form" :rules="rules" label-width="8rem" label-position="left" ref="refForm">
       <el-form-item label="用户名" prop="username">
         <el-input v-model="form.username" />
@@ -93,9 +93,3 @@ function handleCancel() {
     </el-form>
   </div>
 </template>
-<style scoped>
-#wrap {
-  width: 100%;
-  padding: 5rem;
-}
-</style>

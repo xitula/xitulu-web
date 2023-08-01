@@ -43,7 +43,7 @@ onMounted(() => {
     <el-header>
       <Header />
     </el-header>
-    <el-main class="flex flex-col -mt-[1px] text-[--main-color]">
+    <el-main class="flex flex-col -mt-[1px] text-main-color">
       <RouterView />
     </el-main>
     <el-footer class="flex">

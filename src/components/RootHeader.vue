@@ -33,7 +33,7 @@ function handleSelect(routeName: string): void {
     <el-menu-item index="causerie">随感</el-menu-item>
     <el-menu-item index="todo">待办</el-menu-item>
     <el-menu-item index="about">关于</el-menu-item>
-    <div id="white-space"></div>
+    <div class="grow"></div>
     <div class="flex" v-if="mySelf.id === 0">
       <el-menu-item index="signup">注册</el-menu-item>
       <el-menu-item index="login">登录</el-menu-item>
@@ -44,9 +44,3 @@ function handleSelect(routeName: string): void {
     </el-sub-menu>
   </el-menu>
 </template>
-
-<style scoped>
-#white-space {
-  flex-grow: 1;
-}
-</style>

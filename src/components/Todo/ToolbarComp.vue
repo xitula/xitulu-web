@@ -29,7 +29,7 @@ function handleAddClick() {
 
 <template>
   <div
-    class="flex grow-0 shrink-0 justify-between items-center w-full p-[.2rem] pr-4 border-b border-[--main-color]"
+    class="flex grow-0 shrink-0 justify-between items-center w-full p-[.2rem] pr-4 border-b border-main-color"
   >
     <div class="relative flex justify-start items-center grow">
       <!-- 内容输入框 -->
@@ -53,7 +53,7 @@ function handleAddClick() {
         </el-icon>
       </div>
       <!-- 描述输入框 -->
-      <div class="absolute top-[3.3rem] w-full bg-[--main-background-color] z-10" v-if="addSpread">
+      <div class="absolute top-[3.3rem] w-full bg-main-background-color z-10" v-if="addSpread">
         <el-input v-model="inputAddDescription" type="textarea" />
       </div>
     </div>
@@ -118,10 +118,10 @@ function handleAddClick() {
     h-8 
     px-[.4rem]
     border 
-    border-[--main-color] 
+    border-main-color 
     rounded-md
     text-[1.4rem]
-    text-[--main-color]
+    text-main-color
     whitespace-nowrap;
   }
   .btn-no-px {
@@ -135,6 +135,6 @@ function handleAddClick() {
 }
 
 .active {
-  color: var(--main-color-light);
+  @apply text-main-color-light;
 }
 </style>

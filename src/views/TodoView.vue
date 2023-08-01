@@ -44,7 +44,7 @@ function handleEditSave(id: number) {
     <Toolbar />
     <!-- 列表 -->
     <div
-      class="flex flex-col justify-start items-center grow w-full px-[1rem] overflow-scroll text-[2rem] text-[--main-color]"
+      class="flex flex-col justify-start items-center grow w-full px-[1rem] overflow-scroll text-[2rem] text-main-color"
       v-loading="todosLoading"
     >
       <!-- 条目 -->
@@ -116,7 +116,7 @@ function handleEditSave(id: number) {
         <!-- 描述 -->
         <div
           v-if="item.spread"
-          class="flex flex-col justify-center items-center mt-[-1px] p-2 border border-[--main-color] border-t-0"
+          class="flex flex-col justify-center items-center mt-[-1px] p-2 border border-main-color border-t-0"
         >
           <div v-if="!item.editing" class="flex justify-start items-center w-full">
             {{ item.description }}
@@ -147,7 +147,7 @@ function handleEditSave(id: number) {
     @apply w-8
       h-8
       border
-      border-[--main-color]
+      border-main-color
       rounded-lg
       cursor-pointer;
   }

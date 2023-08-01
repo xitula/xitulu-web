@@ -8,9 +8,9 @@ const { showLogin, inputLoginUsername, inputLoginPassword, loginHint, loginLoadi
 const { login } = userStore
 </script>
 <template>
+  <!-- 遮罩层 -->
   <div
-    id="mask"
-    class="flex"
+    class="absolute left-0 top-0 flex justify-center items-center w-full h-full bg-main-background-color/50 z-50"
     @click="
       () => {
         showLogin = false
@@ -18,39 +18,21 @@ const { login } = userStore
     "
     v-if="showLogin"
   >
-    <div id="login-box" class="flex" @click.stop="">
-      <div class="flex" id="hint" v-if="loginHint">{{ loginHint }}</div>
-      <el-input class="input" v-model="inputLoginUsername" />
-      <el-input class="input" v-model="inputLoginPassword" type="password" :show-password="true" />
-      <el-button id="btn" @click="login" :loading="loginLoading">登录</el-button>
+    <!-- 登录盒子 -->
+    <div
+      class="flex flex-col grow-0 justify-between w-[30rem] p-12 border border-main-color bg-main-background-color"
+      @click.stop=""
+    >
+      <!-- 提示信息 -->
+      <div class="flex my-4 text-[1.6rem] text-main-color text-center" v-if="loginHint">
+        {{ loginHint }}
+      </div>
+      <!-- 用户名 -->
+      <el-input class="pb-4" v-model="inputLoginUsername" />
+      <!-- 密码 -->
+      <el-input class="pb-4" v-model="inputLoginPassword" type="password" :show-password="true" />
+      <!-- 登录按钮 -->
+      <el-button class="w-full" @click="login" :loading="loginLoading">登录</el-button>
     </div>
   </div>
 </template>
-<style scoped>
-#mask {
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  z-index: var(--index-level-9);
-}
-#login-box {
-  flex-direction: column;
-  justify-content: space-between;
-  width: 30rem;
-  padding: 3rem;
-  border: 1px solid var(--main-color);
-}
-#hint {
-  margin: 1rem 0 1rem;
-  font-size: 1.6rem;
-  color: var(--main-color);
-  text-align: center;
-}
-.input {
-  padding-bottom: 1rem;
-}
-#btn {
-  width: 100%;
-}
-</style>
