@@ -1,5 +1,5 @@
 type Causerie = {
-  id?: number
+  id: number
   uid: number
   content: string
   status?: number
