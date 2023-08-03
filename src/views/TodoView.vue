@@ -7,12 +7,14 @@ import Toolbar from '../components/Todo/ToolbarComp.vue'
 import { useUserStore } from '../stores/user'
 
 const userStore = useUserStore()
+const { mySelf } = toRefs(userStore)
 const todoStore = useTodoStore()
 const { todos, todosLoading, deleteLoading } = toRefs(todoStore)
 const { toggleTodoDone, toggleSpread, toggleEditing, editTodo, deleteTodo } = todoStore
+// 输入的待办内容
 const inputContent = ref<string>('')
+// 输入的待办描述
 const inputDescription = ref<string>('')
-const { mySelf } = toRefs(userStore)
 
 onMounted(async () => {
   try {
@@ -22,6 +24,10 @@ onMounted(async () => {
   }
 })
 
+/**
+ * 编辑开始处理方法，同步需要编辑的内容到随感弹层
+ * @param {number} id 随感ID
+ */
 function handleEditStart(id: number) {
   const todo = todos.value.find((item) => item.id === id)
   const { content, description } = todo
@@ -30,6 +36,10 @@ function handleEditStart(id: number) {
   toggleEditing(id, true)
 }
 
+/**
+ * 编辑保存处理方法
+ * @param {number} id 随感ID
+ */
 function handleEditSave(id: number) {
   const todo = todos.value.find((item) => item.id === id)
   if (todo.content !== inputContent.value || todo.description !== inputDescription.value) {
@@ -52,7 +62,7 @@ function handleEditSave(id: number) {
     >
       <!-- 条目 -->
       <div
-        class="flex flex-col justify-center shrink-0 w-full min-h-[3rem]"
+        class="flex flex-col justify-center shrink-0 w-full min-h-[3rem] hover:bg-main-background-color-deep"
         v-for="item in todos"
         :key="item.id"
       >
@@ -161,6 +171,9 @@ function handleEditSave(id: number) {
       border-main-color
       rounded-lg
       cursor-pointer;
+  }
+  .btn:first-child {
+    @apply ml-0;
   }
 }
 

@@ -26,7 +26,13 @@ function handleSelect(routeName: string): void {
 </script>
 
 <template>
-  <el-menu :default-active="currentMenu" mode="horizontal" :ellipsis="false" @select="handleSelect">
+  <el-menu
+    :default-active="currentMenu"
+    mode="horizontal"
+    :ellipsis="false"
+    menu-trigger="click"
+    @select="handleSelect"
+  >
     <el-menu-item index="home">首页</el-menu-item>
     <el-menu-item index="tool">工具</el-menu-item>
     <el-menu-item index="blog">博客</el-menu-item>

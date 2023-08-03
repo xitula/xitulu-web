@@ -6,9 +6,8 @@ import { onMounted, toRefs } from 'vue'
 import CreateComp from '../components/causerie/CreateComp.vue'
 
 const userStore = useUserStore()
-const causerieStore = useCauserieStore()
-
 const { mySelf } = toRefs(userStore)
+const causerieStore = useCauserieStore()
 const { createLayerShow } = toRefs(causerieStore)
 const { fetchCauseries } = causerieStore
 
@@ -16,13 +15,16 @@ onMounted(() => {
   fetchCauseries()
 })
 
-function handleToggleCreate() {
+/**
+ * 打开创建弹层
+ */
+function handleShowCreate() {
   const { id } = mySelf.value
   if (id === 0) {
     userStore.loginHint = '需要登录之后才能创建新的随感'
     userStore.showLogin = true
   } else {
-    createLayerShow.value = createLayerShow.value ? false : true
+    createLayerShow.value = true
   }
 }
 </script>
@@ -30,7 +32,7 @@ function handleToggleCreate() {
 <template>
   <div class="flex flex-col items-center w-full p-[--main-padding]">
     <!-- 新增按钮 -->
-    <div class="right-0 top-0 w-12 h-12" @click="handleToggleCreate">
+    <div class="right-0 top-0 w-12 h-12" @click="handleShowCreate">
       <el-icon class="w-full"><EditPen /></el-icon>
     </div>
     <!-- 随感列表 -->

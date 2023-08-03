@@ -4,7 +4,7 @@ import { error } from '../utils/logger'
 
 // 基础技术栈数据
 const baseTechStackList = new Map([
-  // frontend
+  // 前端相关
   ['vite', { name: 'Vite', link: 'https://vitejs.dev/' }],
   ['vue', { name: 'Vue', link: 'https://vuejs.org/' }],
   ['vueRouter', { name: 'VueRouter', link: 'https://router.vuejs.org/' }],
@@ -12,7 +12,7 @@ const baseTechStackList = new Map([
   ['elementPlus', { name: 'ElementPlus', link: 'https://element-plus.org/' }],
   ['eslint', { name: 'Eslint', link: 'https://eslint.org/' }],
 
-  // backend
+  // 后端相关
   ['air', { name: 'Air', link: 'https://github.com/cosmtrek/air/' }], // golang 热更新 via Aklman&F西F西
   ['gorm', { name: 'Eslint', link: 'https://gorm.io/' }], // golang orm via F西F西
 ])

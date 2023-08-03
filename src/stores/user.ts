@@ -9,15 +9,24 @@ function encryptPassword(password: string): string {
   return cryptojs.SHA1(password).toString()
 }
 
+// 配置userStore
 export const useUserStore = defineStore('user', () => {
+  // 当前用户信息
   const mySelf = ref<User>({ id: 0, username: '' })
+  // 是否显示登录弹层
   const showLogin = ref<boolean>(false)
+  // 输入的用户名
   const inputLoginUsername = ref<string>('')
+  // 输入的密码
   const inputLoginPassword = ref<string>('')
+  // 登录弹层提示信息
   const loginHint = ref<string>('')
+  // 登录中loading
   const loginLoading = ref<boolean>(false)
+  // 注册中loading
   const signupLoading = ref<boolean>(false)
 
+  // 登录
   function login() {
     const pwd = encryptPassword(inputLoginPassword.value)
     const params = {
@@ -52,6 +61,7 @@ export const useUserStore = defineStore('user', () => {
       })
   }
 
+  // 登出
   function logout() {
     const { id = 0 } = Object(mySelf.value)
     if (id) {
@@ -77,6 +87,7 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
+  // 注册
   function signup(form: SignupForm) {
     const params = { ...form }
     delete params.verifyPassword
@@ -92,6 +103,7 @@ export const useUserStore = defineStore('user', () => {
           })
         } else {
           const { token } = Object(data)
+          // 注册成功后直接变为登录状态
           mySelf.value = data
           sessionStorage.setItem('token', token)
         }

@@ -6,18 +6,30 @@ import { useUserStore } from './user'
 import { ElMessage } from 'element-plus'
 
 export const useCauserieStore = defineStore('causerie', () => {
+  // 是否展示新增或编辑弹层
   const createLayerShow = ref<boolean>(false)
+  // 输入的创建内容
   const createContent = ref<string>('')
+  // 新增中loading
   const createLoading = ref<boolean>(false)
+  // 随感列表
   const causeries = ref<Causerie[]>([])
+  // 随感加载中loading
   const causeriesLoading = ref<boolean>(false)
+  // 新增弹层是否为编辑模式
   const isEdit = ref<boolean>(false)
+  // 变集中的随感ID
   const editId = ref<number>(0)
+  // 删除中loading
   const deleteLoading = ref<boolean>(false)
 
   const userStore = useUserStore()
   const { mySelf } = userStore
 
+  /**
+   * 设置编辑弹层编辑中的随感数据
+   * @param {Causerie} item 随感数据
+   */
   function setEdit(item: Causerie) {
     editId.value = item.id
     createContent.value = item.content
@@ -25,8 +37,13 @@ export const useCauserieStore = defineStore('causerie', () => {
     isEdit.value = true
   }
 
+  /**
+   * 创建随感
+   * @returns {*}
+   */
   function createCauserie() {
     const { id } = mySelf
+    // 防止重复请求且需要登录
     if (id === 0 || createLoading.value === true) return
 
     const params = {
@@ -58,12 +75,17 @@ export const useCauserieStore = defineStore('causerie', () => {
       })
   }
 
+  /**
+   * 编辑随感
+   * @returns {*}
+   */
   function editCauserie() {
-    const { id } = mySelf
-    if (id === 0 || createLoading.value === true) return
-
+    const { id: uid } = mySelf
+    // 防止重复提交
+    if (uid === 0 || createLoading.value === true) return
     const item = causeries.value.find((elem) => elem.id === editId.value)
-    if (!item) return
+    // 只允许操作本人数据
+    if (!item || item.uid !== uid) return
 
     const params = {
       id: item.id,
@@ -96,6 +118,10 @@ export const useCauserieStore = defineStore('causerie', () => {
       })
   }
 
+  /**
+   * 获取随感列表
+   * @returns {*}
+   */
   function fetchCauseries() {
     causeriesLoading.value = true
     return get('/causeries')
@@ -115,10 +141,17 @@ export const useCauserieStore = defineStore('causerie', () => {
       })
   }
 
+  /**
+   * 删除随感
+   * @param {number} id 随感ID
+   * @returns {*}
+   */
   function deleteCauserie(id: number) {
     const { id: uid } = mySelf
+    // 防止重复提交
     if (id === 0 || deleteLoading.value === true) return
     const item = causeries.value.find((elem) => elem.id === id)
+    // 只允许操作本人数据
     if (!item || item.uid !== uid) return
 
     deleteLoading.value = true

@@ -4,6 +4,8 @@
 
 // 技术栈项目
 interface TechStack {
+  // 技术名称
   name: string
+  // 官网链接
   link: string
 }

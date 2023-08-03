@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, readonly } from 'vue'
 import router from '../router/index'
 import { ElMessage, FormInstance, FormRules } from 'element-plus'
 import { useUserStore } from '../stores/user'
@@ -7,15 +7,23 @@ import { error } from '../utils/logger'
 
 const userStore = useUserStore()
 
+// 注册用户表单数据
 const form = reactive<SignupForm>({
+  // 昵称
   nickname: '',
+  // 用户名
   username: '',
+  // 密码
   password: '',
+  // 校验密码
   verifyPassword: '',
+  // 邮箱地址
   email: '',
 })
+// 表单实例引用
 const refForm = ref<FormInstance>()
-const rules = reactive<FormRules<SignupForm>>({
+//校验规则
+const rules: FormRules<SignupForm> = {
   nickname: [{ min: 2, max: 20, message: '昵称长度为2~20字符', trigger: 'blur' }],
   username: [
     { required: true, message: '用户名不能为空', trigger: 'blur' },
@@ -35,10 +43,17 @@ const rules = reactive<FormRules<SignupForm>>({
     { required: true, message: '校验密码不能为空', trigger: 'blur' },
     { validator: validatorVerifyPassword, trigger: 'blur' },
   ],
-  email: [{ type: 'email', trigger: 'blur' }],
-})
+  email: [
+    { required: true, message: '邮箱地址不能为空', trigger: 'blur' },
+    { type: 'email', message: '不是有效的邮箱地址', trigger: 'blur' },
+  ],
+}
 
-const submitForm = async (formEl: FormInstance | undefined) => {
+/**
+ * 提交校验与执行方法
+ * @param formEl 表单实例
+ */
+async function submitForm(formEl: FormInstance | undefined) {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
@@ -47,11 +62,17 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         router.back()
       })
     } else {
-      error('error submit!', fields)
+      error('校验未通过:', fields)
     }
   })
 }
 
+/**
+ * 校验两次输入的密码是否相同
+ * @param rule
+ * @param value
+ * @param callback
+ */
 function validatorVerifyPassword(rule: any, value: any, callback: any) {
   if (value === '') {
     callback(new Error('请输入校验密码'))
@@ -62,6 +83,9 @@ function validatorVerifyPassword(rule: any, value: any, callback: any) {
   }
 }
 
+/**
+ * 取消注册并返回上一页
+ */
 function handleCancel() {
   router.back()
 }
@@ -69,6 +93,9 @@ function handleCancel() {
 <template>
   <div class="flex justify-center w-full p-20">
     <el-form :model="form" :rules="rules" label-width="8rem" label-position="left" ref="refForm">
+      <el-form-item label="昵称" prop="nickname">
+        <el-input v-model="form.nickname" />
+      </el-form-item>
       <el-form-item label="用户名" prop="username">
         <el-input v-model="form.username" />
       </el-form-item>
@@ -77,9 +104,6 @@ function handleCancel() {
       </el-form-item>
       <el-form-item label="确认密码" prop="verifyPassword">
         <el-input v-model="form.verifyPassword" type="password" :show-password="true" />
-      </el-form-item>
-      <el-form-item label="昵称" prop="nickname">
-        <el-input v-model="form.nickname" />
       </el-form-item>
       <el-form-item label="邮箱" prop="email">
         <el-input v-model="form.email" />
