@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { get, post, put } from '../logics/request'
+import { ElMessage } from 'element-plus'
+import { get, post, put, del } from '../logics/request'
 import { error } from '../utils/logger'
 import { useUserStore } from './user'
 
@@ -48,17 +49,18 @@ function updateTodo(params: ReqTodo): Promise<void> {
     .then((res) => {
       const { code, message } = Object(res)
       if (code !== 0) {
-        error('updateTodoError:', message)
+        error('更新待办接口错误:', message)
         return Promise.reject(Error(message))
       }
     })
     .catch((err) => {
-      error('updateTodoError', err)
+      error('网络错误:', err)
     })
 }
 
 export const useTodoStore = defineStore('todo', () => {
   const userStore = useUserStore()
+  const deleteLoading = ref<boolean>(false)
   // toolbar
   const inputAddContent = ref<string>('') // 新增内容输入框绑定
   const inputAddDescription = ref<string>('') // 新增描述输入框绑定
@@ -128,7 +130,7 @@ export const useTodoStore = defineStore('todo', () => {
         if (code === 0) {
           todos.value = formatTodos(list)
         } else {
-          error('fetchTodosError:', message)
+          error('获取待办接口错误:', message)
           return Promise.reject(message)
         }
       })
@@ -157,6 +159,34 @@ export const useTodoStore = defineStore('todo', () => {
         })
     }
     return Promise.reject(Error('ID错误'))
+  }
+
+  function deleteTodo(id: number) {
+    const { id: uid } = userStore.mySelf
+    if (id === 0 || deleteLoading.value === true) return
+    const item = todos.value.find((elem) => elem.id === id)
+    if (!item || item.uid !== uid) return
+
+    deleteLoading.value = true
+    return del(`/todo/${id}`)
+      .then((res) => {
+        const { code, message } = Object(res)
+        if (code !== 0) {
+          error('删除待办接口错误:', message)
+        } else {
+          ElMessage({
+            type: 'success',
+            message: '删除成功',
+          })
+          fetchTodos()
+        }
+      })
+      .catch((err) => {
+        error('网络错误:', err)
+      })
+      .finally(() => {
+        deleteLoading.value = false
+      })
   }
 
   function toggleTodoDone(id: number) {
@@ -211,6 +241,7 @@ export const useTodoStore = defineStore('todo', () => {
     currentPage,
     total,
     pageSize,
+    deleteLoading,
     handleAddTodo,
     changeOrder,
     changeFilter,
@@ -220,5 +251,6 @@ export const useTodoStore = defineStore('todo', () => {
     toggleSpread,
     toggleEditing,
     handleCurrentPageChange,
+    deleteTodo,
   }
 })

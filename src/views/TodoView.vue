@@ -4,12 +4,15 @@ import { ref, onMounted, toRefs } from 'vue'
 import { useTodoStore } from '../stores/todo'
 import Pagination from '../components/Todo/PaginationComp.vue'
 import Toolbar from '../components/Todo/ToolbarComp.vue'
+import { useUserStore } from '../stores/user'
 
+const userStore = useUserStore()
 const todoStore = useTodoStore()
-const { todos, todosLoading } = toRefs(todoStore)
-const { toggleTodoDone, toggleSpread, toggleEditing, editTodo } = todoStore
+const { todos, todosLoading, deleteLoading } = toRefs(todoStore)
+const { toggleTodoDone, toggleSpread, toggleEditing, editTodo, deleteTodo } = todoStore
 const inputContent = ref<string>('')
 const inputDescription = ref<string>('')
+const { mySelf } = toRefs(userStore)
 
 onMounted(async () => {
   try {
@@ -55,10 +58,7 @@ function handleEditSave(id: number) {
       >
         <div class="flex justify-center items-center min-w-0">
           <!-- 完成状态 -->
-          <div
-            class="flex justify-center items-center shrink-0 btn"
-            @click="toggleTodoDone(item.id)"
-          >
+          <div class="btn" @click="toggleTodoDone(item.id)">
             <el-icon v-if="item.done && !item.doneLoading">
               <Check />
             </el-icon>
@@ -83,23 +83,20 @@ function handleEditSave(id: number) {
           <!-- 按钮容器 -->
           <div class="flex">
             <!-- 展开按钮 -->
-            <div
-              class="flex justify-center items-center mr-4"
-              v-if="item.description || item.editing"
-            >
-              <div class="flex justify-center items-center shrink-0 btn" v-if="!item.spread">
+            <div class="flex justify-center items-center" v-if="item.description || item.editing">
+              <div class="btn" v-if="!item.spread">
                 <el-icon @click="toggleSpread(item.id)">
                   <ArrowDown />
                 </el-icon>
               </div>
-              <div class="flex justify-center items-center shrink-0 btn" v-else>
+              <div class="btn" v-else>
                 <el-icon @click="toggleSpread(item.id)">
                   <ArrowUp />
                 </el-icon>
               </div>
             </div>
             <!-- 编辑按钮 -->
-            <div class="flex justify-center items-center shrink-0 btn">
+            <div class="btn">
               <el-icon v-if="item.editSaveLoading">
                 <Loading />
               </el-icon>
@@ -108,6 +105,15 @@ function handleEditSave(id: number) {
               </el-icon>
               <el-icon v-else @click="handleEditSave(item.id)">
                 <Check />
+              </el-icon>
+            </div>
+            <!-- 删除按钮 -->
+            <div class="btn" v-if="item.uid === mySelf.id">
+              <el-icon v-if="deleteLoading">
+                <Loading />
+              </el-icon>
+              <el-icon v-else @click="deleteTodo(item.id)">
+                <Delete />
               </el-icon>
             </div>
           </div>
@@ -144,7 +150,12 @@ function handleEditSave(id: number) {
       cursor-default;
   }
   .btn {
-    @apply w-8
+    @apply flex
+      justify-center
+      items-center
+      shrink-0  
+      ml-4
+      w-8
       h-8
       border
       border-main-color

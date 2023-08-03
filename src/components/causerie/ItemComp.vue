@@ -29,7 +29,7 @@ function handleEdit(item: Causerie): void {
     <!-- 用户内容容器 -->
     <div class="grow flex flex-col pl-4">
       <!-- 用户信息 -->
-      <div class="flex justify-between items-center">
+      <div class="flex justify-between items-center pr-4">
         <div class="text-[3rem] font-bold">{{ item.uid }}</div>
         <!-- 操作按钮 -->
         <div class="causerie-actions hidden" v-if="item.uid === mySelf.id">

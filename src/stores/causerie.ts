@@ -39,7 +39,7 @@ export const useCauserieStore = defineStore('causerie', () => {
       .then((res) => {
         const { code, message } = Object(res)
         if (code !== 0) {
-          error('insertCauseries API error:', message)
+          error('创建随感接口错误:', message)
         } else {
           createLayerShow.value = false
           createContent.value = ''
@@ -75,7 +75,7 @@ export const useCauserieStore = defineStore('causerie', () => {
       .then((res) => {
         const { code, message } = Object(res)
         if (code !== 0) {
-          error('insertCauseries API error:', message)
+          error('更新随感接口错误:', message)
         } else {
           createLayerShow.value = false
           editId.value = 0
@@ -102,7 +102,7 @@ export const useCauserieStore = defineStore('causerie', () => {
       .then((res) => {
         const { code, message, data } = Object(res)
         if (code !== 0) {
-          error('fetchCauseries API error:', message)
+          error('获取随感接口错误:', message)
         } else {
           causeries.value = data
         }
@@ -126,7 +126,7 @@ export const useCauserieStore = defineStore('causerie', () => {
       .then((res) => {
         const { code, message } = Object(res)
         if (code !== 0) {
-          error('fetchCauseries API error:', message)
+          error('删除随感接口错误:', message)
         } else {
           ElMessage({
             type: 'success',
