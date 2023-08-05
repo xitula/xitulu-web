@@ -3,12 +3,13 @@ import { ref } from 'vue'
 import { useUserStore } from './user'
 import { get, post } from '@/logics/request'
 import { ElMessage } from 'element-plus'
+import { ArticleMode } from '@/constants/article'
 
 export const useArticleStore = defineStore('atricleStore', () => {
   const userStore = useUserStore()
 
   // 文章处理模式
-  const mode = ref<ArticleMode>('list')
+  const mode = ref<ArticleMode>(ArticleMode.List)
   // 当前文章标题
   const title = ref<string>('')
   // 当前文章内容

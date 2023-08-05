@@ -17,10 +17,3 @@ interface ArticleStatus {
 interface Article extends ArticleAdd, ArticleStatus {
   id: number
 }
-
-// enum ArticleMode {
-//   List,
-//   Edit,
-// }
-// 文章页面模式
-type ArticleMode = 'list' | 'edit'
