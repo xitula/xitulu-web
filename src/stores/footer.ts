@@ -10,7 +10,6 @@ export const useFooterStore = defineStore('footer', () => {
 
   /**
    * 配置命令提示
-   *
    * @param {string[]} list 输入的命令列表
    */
   function setHints(list: string[]): void {

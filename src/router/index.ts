@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ToolView from '../views/ToolView.vue'
-import BlogView from '../views/BlogView.vue'
+import ArticleView from '../views/ArticleView.vue'
 import Causerie from '../views/CauserieView.vue'
 import TodoView from '../views/TodoView.vue'
 
@@ -9,17 +9,18 @@ export const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView,
+    // component: HomeView,
+    redirect: '/blog',
   },
+  // {
+  //   path: '/tool',
+  //   name: 'tool',
+  //   component: ToolView,
+  // },
   {
-    path: '/tool',
-    name: 'tool',
-    component: ToolView,
-  },
-  {
-    path: '/blog',
-    name: 'blog',
-    component: BlogView,
+    path: '/article',
+    name: 'article',
+    component: ArticleView,
   },
   {
     path: '/causerie',
