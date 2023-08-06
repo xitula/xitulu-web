@@ -2,7 +2,7 @@
 import router from '../../router/index'
 import { toRefs } from 'vue'
 import { useArticleStore } from '../../stores/articles'
-import { ArticleMode } from '../../constants/article';
+import { ArticleMode } from '../../constants/article'
 
 const emit = defineEmits(['done'])
 
@@ -28,7 +28,13 @@ function handleDone() {
   <div class="flex justify-between">
     <el-button @click="handleBack">返回</el-button>
     <el-input class="mx-4 text-center" v-model="title" placeholder="请输入文章标题" />
-    <el-button @click="handleDone" :disable="saveLoading" :loading="saveLoading">{{mode === ArticleMode.Create ? '创建' : '保存'}}</el-button>
+    <el-button
+      @click="handleDone"
+      :disable="saveLoading"
+      :loading="saveLoading"
+      v-if="mode !== ArticleMode.View"
+      >{{ mode === ArticleMode.Create ? '创建' : '保存' }}</el-button
+    >
   </div>
 </template>
 

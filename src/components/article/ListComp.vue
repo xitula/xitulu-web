@@ -8,7 +8,7 @@ const userStore = useUserStore()
 const { mySelf } = storeToRefs(userStore)
 const articleStore = useArticleStore()
 const { articles } = storeToRefs(articleStore)
-const { fetchArticles, setEdit, setCreate } = articleStore
+const { fetchArticles, setEdit, setCreate, setView } = articleStore
 
 onMounted(() => {
   fetchArticles()
@@ -16,6 +16,10 @@ onMounted(() => {
 
 function handleCreate() {
   setCreate()
+}
+
+function handleStartView(id: number) {
+  setView(id)
 }
 
 function handleEditStart(id: number) {
@@ -39,7 +43,7 @@ function handleEditStart(id: number) {
         :key="article.id"
       >
         <!-- 标题 -->
-        <div class="grow">
+        <div class="grow" @click="handleStartView(article.id)">
           {{ article.title }}
         </div>
         <!-- 操作区 -->

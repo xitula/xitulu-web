@@ -172,5 +172,6 @@ export const useArticleStore = defineStore('atricleStore', () => {
     setBack2List,
     setEdit,
     setCreate,
+    setView,
   }
 })
