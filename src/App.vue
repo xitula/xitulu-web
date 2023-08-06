@@ -29,7 +29,7 @@ onMounted(() => {
   const mySelfStr = sessionStorage.getItem('mySelf') ?? '{}'
   try {
     const mySelf = JSON.parse(mySelfStr)
-    if (mySelf && mySelf?.id !== 0) {
+    if (mySelf?.id && mySelf?.id !== 0) {
       userStore.mySelf = mySelf
     }
   } catch (err) {

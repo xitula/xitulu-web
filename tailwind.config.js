@@ -17,6 +17,12 @@ module.exports = {
         'main-background-color-deep': '#141414',
         // 修改以上颜色时须注意同步到base.css
       },
+      fontSize: {
+        'common-size': '2rem',
+      },
+      padding: {
+        'main-wrap': '1rem',
+      }
     },
   },
   plugins: [],
