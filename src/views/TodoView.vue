@@ -30,10 +30,12 @@ onMounted(async () => {
  */
 function handleEditStart(id: number) {
   const todo = todos.value.find((item) => item.id === id)
-  const { content, description } = todo
-  inputContent.value = content
-  inputDescription.value = description
-  toggleEditing(id, true)
+  if (todo) {
+    const { content, description } = todo
+    inputContent.value = content
+    inputDescription.value = description
+    toggleEditing(id, true)
+  }
 }
 
 /**
@@ -42,7 +44,7 @@ function handleEditStart(id: number) {
  */
 function handleEditSave(id: number) {
   const todo = todos.value.find((item) => item.id === id)
-  if (todo.content !== inputContent.value || todo.description !== inputDescription.value) {
+  if (todo?.content !== inputContent.value || todo?.description !== inputDescription.value) {
     editTodo(id, inputContent.value, inputDescription.value).then(() => {
       toggleEditing(id, false)
     })

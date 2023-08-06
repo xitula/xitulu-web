@@ -26,7 +26,7 @@ onBeforeUnmount(() => {
 
 // 将当前文章内容赋值给store并触发保存
 function handleSave() {
-  const value = vditor.value.getValue()
+  const value = vditor.value?.getValue() ?? ''
   articleStore.content = value
   articleStore.handleSave()
 }

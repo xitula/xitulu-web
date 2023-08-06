@@ -31,7 +31,7 @@ type TodoStatus = {
 }
 
 // 待办事项
-type Todo = Omit<ReqTodo, 'done'> & TodoStatus
+type Todo = Required<Omit<ReqTodo, 'done'> & TodoStatus>
 
 // 排序条件
 type OrderBy = 'create-desc' | 'update-desc'

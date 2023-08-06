@@ -2,4 +2,5 @@
 export enum ArticleMode {
   List,
   Edit,
+  Create,
 }

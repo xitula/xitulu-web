@@ -92,7 +92,7 @@ html.dark {
   --el-bg-color: #626aef;
 }
 
-// TODO 未生效
+/* TODO 未生效 */
 html::-webkit-scrollbar {
   width: 1rem;
 }

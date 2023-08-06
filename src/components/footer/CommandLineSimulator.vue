@@ -16,7 +16,7 @@ watch(command, (newCmd) => {
 /**
  * 提交命令执行
  */
-function changeHandler(cmd): void {
+function changeHandler(cmd: string): void {
   const { code } = cls.execCommand(cmd)
   if (code === 0) command.value = ''
 }

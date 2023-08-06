@@ -26,7 +26,7 @@ onMounted(() => {
   setTechStack('home')
 
   // 根据Session存储恢复登录状态
-  const mySelfStr = sessionStorage.getItem('mySelf')
+  const mySelfStr = sessionStorage.getItem('mySelf') ?? '{}'
   try {
     const mySelf = JSON.parse(mySelfStr)
     if (mySelf && mySelf?.id !== 0) {

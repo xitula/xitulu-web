@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive, readonly } from 'vue'
 import router from '../router/index'
-import { ElMessage, FormInstance, FormRules } from 'element-plus'
+import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
 import { useUserStore } from '../stores/user'
 import { error } from '../utils/logger'
 
