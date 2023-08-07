@@ -16,6 +16,8 @@ type User = {
 
 // 注册表单
 type SignupForm = {
+  // 头像地址
+  avatarUrl?: string
   // 昵称
   nickname?: string
   // 用户名

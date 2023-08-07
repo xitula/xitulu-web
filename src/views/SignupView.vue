@@ -1,14 +1,23 @@
 <script setup lang="ts">
-import { ref, reactive, readonly } from 'vue'
+import { ref, reactive } from 'vue'
 import router from '../router/index'
-import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
+import { ElMessage } from 'element-plus'
+import type {
+  UploadProps,
+  UploadUserFile,
+  FormInstance,
+  UploadInstance,
+  FormRules,
+} from 'element-plus'
 import { useUserStore } from '../stores/user'
 import { error } from '../utils/logger'
+import config from '../constants/config.json'
 
 const userStore = useUserStore()
 
 // 注册用户表单数据
 const form = reactive<SignupForm>({
+  avatarUrl: '',
   // 昵称
   nickname: '',
   // 用户名
@@ -47,6 +56,57 @@ const rules: FormRules<SignupForm> = {
     { required: true, message: '邮箱地址不能为空', trigger: 'blur' },
     { type: 'email', message: '不是有效的邮箱地址', trigger: 'blur' },
   ],
+}
+// 上传接口地址
+const actionUrl = `${config.apiHost}:${config.apiPort}/upload/avatar`
+// 上传组件实例引用
+const uploadRef = ref<UploadInstance>()
+// 上传组件文件列表
+const fileList = ref<UploadUserFile[]>([])
+// 头像上传loading
+const avatarUploadLoading = ref<boolean>(false)
+
+/**
+ * 上传进程中处理
+ * @param {UploadProps['onProgress']} e 进度事件
+ */
+const handleProgress: UploadProps['onProgress'] = (e) => {
+  const { percent } = Object(e)
+  if (percent !== 100) {
+    avatarUploadLoading.value = true
+  } else {
+    avatarUploadLoading.value = false
+  }
+}
+
+/**
+ * 上传成功处理
+ * @param {UploadProps['onSuccess']} response
+ */
+const handleSuccess: UploadProps['onSuccess'] = (response) => {
+  const { code, message, data } = Object(response)
+  if (code !== 0) {
+    ElMessage({
+      type: 'error',
+      message: 'API上传错误:' + message,
+    })
+    uploadRef.value.clearFiles()
+  } else {
+    const { path, filename } = Object(data)
+    form.avatarUrl = `${config.apiHost}:${config.apiPort}${path}${filename}`
+  }
+}
+
+/**
+ * 上传失败处理
+ * @param {UploadProps['onError']} response
+ */
+const handleError: UploadProps['onError'] = (response) => {
+  ElMessage({
+    type: 'error',
+    message: '上传错误:' + response,
+  })
+  uploadRef.value.clearFiles()
 }
 
 /**
@@ -90,9 +150,30 @@ function handleCancel() {
   router.back()
 }
 </script>
+
 <template>
   <div class="flex justify-center w-full p-20">
     <el-form :model="form" :rules="rules" label-width="8rem" label-position="left" ref="refForm">
+      <el-form-item class="flex justify-start align-center" label="头像" prop="avatarUrl">
+        <el-avatar size="50" :src="form.avatarUrl" v-loading="avatarUploadLoading" />
+        <el-upload
+          ref="uploadRef"
+          v-model:file-list="fileList"
+          class="upload-demo"
+          :action="actionUrl"
+          :limit="1"
+          :show-file-list="false"
+          accept="image/*"
+          @success="handleSuccess"
+          @error="handleError"
+          @progress="handleProgress"
+        >
+          <el-button type="primary">选择头像</el-button>
+          <template #tip>
+            <div class="el-upload__tip">支持jpg/png格式，最大限制1MB.</div>
+          </template>
+        </el-upload>
+      </el-form-item>
       <el-form-item label="昵称" prop="nickname">
         <el-input v-model="form.nickname" />
       </el-form-item>
