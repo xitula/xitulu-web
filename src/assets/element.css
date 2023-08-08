@@ -74,6 +74,12 @@
   background-color: var(--main-background-color-deep);
 }
 
+.el-button:focus,
+.el-button:hover {
+  background-color: var(--main-color);
+  border-color: var(--main-color);
+}
+
 /* 自定义Input样式 */
 .el-input {
   --el-input-border-color: var(--main-color);

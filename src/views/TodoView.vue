@@ -5,6 +5,8 @@ import { useTodoStore } from '../stores/todo'
 import Pagination from '../components/Todo/PaginationComp.vue'
 import Toolbar from '../components/Todo/ToolbarComp.vue'
 import { useUserStore } from '../stores/user'
+import SquareBtn from '../components/SquareBtn.vue'
+import { ElMessageBox } from 'element-plus'
 
 const userStore = useUserStore()
 const { mySelf } = toRefs(userStore)
@@ -52,6 +54,18 @@ function handleEditSave(id: number) {
     toggleEditing(id, false)
   }
 }
+
+function handleDelete(id: number) {
+  ElMessageBox.confirm('是否确定删除该待办事项？', '删除确认', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning',
+  })
+    .then(() => {
+      deleteTodo(id)
+    })
+    .catch()
+}
 </script>
 
 <template>
@@ -68,78 +82,82 @@ function handleEditSave(id: number) {
         v-for="item in todos"
         :key="item.id"
       >
-        <div class="flex justify-center items-center min-w-0">
-          <!-- 完成状态 -->
-          <div class="btn" @click="toggleTodoDone(item.id)">
-            <el-icon v-if="item.done && !item.doneLoading">
-              <Check />
-            </el-icon>
-            <el-icon v-if="item.doneLoading">
-              <Loading />
-            </el-icon>
-          </div>
-          <!-- 内容 -->
-          <div
-            class="flex justify-center items-center grow px-4 overflow-hidden whitespace-nowrap text-ellipsis cursor-default"
-          >
-            <div
-              v-if="!item.editing"
-              class="content"
-              :class="{ 'line-through': item.done }"
-              :alt="item.content"
-            >
-              {{ item.content }}
-            </div>
-            <el-input v-else class="content" placeholder="事项内容" v-model="inputContent" />
-          </div>
-          <!-- 按钮容器 -->
-          <div class="flex">
-            <!-- 展开按钮 -->
-            <div class="flex justify-center items-center" v-if="item.description || item.editing">
-              <div class="btn" v-if="!item.spread">
-                <el-icon @click="toggleSpread(item.id)">
-                  <ArrowDown />
-                </el-icon>
-              </div>
-              <div class="btn" v-else>
-                <el-icon @click="toggleSpread(item.id)">
-                  <ArrowUp />
-                </el-icon>
-              </div>
-            </div>
-            <!-- 编辑按钮 -->
-            <div class="btn">
-              <el-icon v-if="item.editSaveLoading">
-                <Loading />
-              </el-icon>
-              <el-icon v-else-if="!item.editing" @click="handleEditStart(item.id)">
-                <EditPen />
-              </el-icon>
-              <el-icon v-else @click="handleEditSave(item.id)">
+        <div class="flex flex-col justify-center items-center">
+          <!-- 条目主体 -->
+          <div class="w-full flex justify-between items-center">
+            <!-- 完成状态 -->
+            <div @click="toggleTodoDone(item.id)">
+              <SquareBtn v-if="item.done && !item.doneLoading">
                 <Check />
-              </el-icon>
-            </div>
-            <!-- 删除按钮 -->
-            <div class="btn" v-if="item.uid === mySelf.id">
-              <el-icon v-if="deleteLoading">
+              </SquareBtn>
+              <SquareBtn v-else-if="item.doneLoading">
                 <Loading />
-              </el-icon>
-              <el-icon v-else @click="deleteTodo(item.id)">
-                <Delete />
-              </el-icon>
+              </SquareBtn>
+              <SquareBtn v-else />
+            </div>
+            <!-- 内容 -->
+            <div
+              class="flex justify-center items-center grow px-4 overflow-hidden whitespace-nowrap text-ellipsis cursor-default"
+            >
+              <div
+                v-if="!item.editing"
+                class="content"
+                :class="{ 'line-through': item.done }"
+                :alt="item.content"
+              >
+                {{ item.content }}
+              </div>
+              <el-input v-else class="content" placeholder="事项内容" v-model="inputContent" />
+            </div>
+            <!-- 展开按钮 -->
+            <div>
+              <SquareBtn v-if="!item.spread" @click="toggleSpread(item.id)">
+                <ArrowDown />
+              </SquareBtn>
+              <SquareBtn v-else @click="toggleSpread(item.id)">
+                <ArrowUp />
+              </SquareBtn>
             </div>
           </div>
-          <!-- <div class="create-date" hidden :alt="item.createDate">{{ item.createDate }}</div> -->
-        </div>
-        <!-- 描述 -->
-        <div
-          v-if="item.spread"
-          class="flex flex-col justify-center items-center mt-[-1px] p-2 border border-main-color border-t-0"
-        >
-          <div v-if="!item.editing" class="flex justify-start items-center w-full">
-            {{ item.description }}
+
+          <!-- 描述与操作区 -->
+          <div
+            v-if="item.spread"
+            class="w-full flex justify-center items-start mt-[-1px] p-2 border border-main-color border-t-0"
+          >
+            <!-- 描述区域 -->
+            <div class="flex grow justify-start">
+              <div v-if="!item.editing" class="flex justify-start items-center w-full">
+                {{ item.description }}
+              </div>
+              <el-input v-else type="textarea" v-model="inputDescription" placeholder="事项描述" />
+            </div>
+            <!-- 操作区域 -->
+            <div class="flex flex-col grow-0 shrink-0 justify-start" v-if="item.uid === mySelf.id">
+              <!-- 编辑按钮 -->
+              <div>
+                <SquareBtn v-if="item.editSaveLoading">
+                  <Loading />
+                </SquareBtn>
+                <SquareBtn v-else-if="!item.editing" @click="handleEditStart(item.id)">
+                  <EditPen />
+                </SquareBtn>
+                <SquareBtn v-else @click="handleEditSave(item.id)">
+                  <Check />
+                </SquareBtn>
+              </div>
+              <!-- 删除按钮 -->
+              <div class="mt-4">
+                <SquareBtn v-if="deleteLoading">
+                  <Loading />
+                </SquareBtn>
+                <SquareBtn v-else @click="handleDelete(item.id)">
+                  <Delete />
+                </SquareBtn>
+              </div>
+            </div>
+            <!-- <div class="create-date" hidden :alt="item.createDate">{{ item.createDate }}</div> -->
           </div>
-          <el-input v-else type="textarea" v-model="inputDescription" placeholder="事项描述" />
         </div>
       </div>
     </div>
@@ -160,22 +178,6 @@ function handleEditSave(id: number) {
       whitespace-nowrap
       text-ellipsis
       cursor-default;
-  }
-  .btn {
-    @apply flex
-      justify-center
-      items-center
-      shrink-0  
-      ml-4
-      w-8
-      h-8
-      border
-      border-main-color
-      rounded-lg
-      cursor-pointer;
-  }
-  .btn:first-child {
-    @apply ml-0;
   }
 }
 
