@@ -300,7 +300,7 @@ export const useTodoStore = defineStore('todo', () => {
     if (todo) {
       todo.editing = newStatus
       // 编辑后描述为空时收起
-      if (!todo.description) todo.spread = false
+      // if (!todo.description) todo.spread = false
     }
   }
 

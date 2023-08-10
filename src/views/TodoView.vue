@@ -84,7 +84,7 @@ function handleDelete(id: number) {
       >
         <div class="flex flex-col justify-center items-center">
           <!-- 条目主体 -->
-          <div class="w-full flex justify-between items-center">
+          <div class="w-full flex justify-between items-center min-h-12">
             <!-- 完成状态 -->
             <div @click="toggleTodoDone(item.id)">
               <SquareBtn v-if="item.done && !item.doneLoading">
@@ -126,11 +126,11 @@ function handleDelete(id: number) {
             class="w-full flex justify-center items-start mt-[-1px] p-2 border border-main-color border-t-0"
           >
             <!-- 描述区域 -->
-            <div class="flex grow justify-start">
-              <div v-if="!item.editing" class="flex justify-start items-center w-full">
+            <div class="flex grow justify-start pr-4">
+              <div class="flex justify-start items-center w-full" v-if="!item.editing">
                 {{ item.description }}
               </div>
-              <el-input v-else type="textarea" v-model="inputDescription" placeholder="事项描述" />
+              <el-input type="textarea" v-model="inputDescription" placeholder="事项描述" v-else />
             </div>
             <!-- 操作区域 -->
             <div class="flex flex-col grow-0 shrink-0 justify-start" v-if="item.uid === mySelf.id">

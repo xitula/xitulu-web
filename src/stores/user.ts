@@ -44,6 +44,10 @@ export const useUserStore = defineStore('user', () => {
           sessionStorage.setItem('token', token)
           sessionStorage.setItem('mySelf', JSON.stringify(data))
           showLogin.value = false
+          ElMessage({
+            type: 'success',
+            message: '登录成功',
+          })
         }
       })
       .catch((err) => {
