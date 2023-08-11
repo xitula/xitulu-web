@@ -6,7 +6,7 @@ import { error } from '@/utils/logger'
 import cryptojs from 'crypto-js'
 
 function encryptPassword(password: string): string {
-  return cryptojs.SHA1(password).toString()
+  return cryptojs.SHA256(password).toString()
 }
 
 // 配置userStore
